@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\fires\\source\\repos\\BookingRooms\\BookingRooms.csproj",
+      "projectUniqueName": "C:\\Users\\fires\\source\\repos\\BookingRepository\\BookingRooms\\BookingRooms.csproj",
       "projectName": "BookingRooms",
-      "projectPath": "C:\\Users\\fires\\source\\repos\\BookingRooms\\BookingRooms.csproj",
+      "projectPath": "C:\\Users\\fires\\source\\repos\\BookingRepository\\BookingRooms\\BookingRooms.csproj",
       "packagesPath": "C:\\Users\\fires\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\fires\\source\\repos\\BookingRooms\\obj\\",
+      "outputPath": "C:\\Users\\fires\\source\\repos\\BookingRepository\\BookingRooms\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

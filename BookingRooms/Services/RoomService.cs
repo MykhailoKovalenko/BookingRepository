@@ -9,18 +9,25 @@ namespace BookingRooms.Services
 {
     public class RoomService : IRoomService
     {
-        static List<Room> Rooms { get; }
-        static RoomService()
+
+        private IRoomService _roomService;
+        public RoomService(IRoomService roomService)
         {
-            Rooms = new List<Room>
-            {
-                new Room { Id = 1, Name = "Colorado", Places = 10 },
-                new Room { Id = 2, Name = "Minesota", Places = 5 },
-                new Room { Id = 3, Name = "New York", Places = 15}
-            };
+            _roomService = roomService;
         }
 
-        public List<Room> GetAll() => Rooms;
-        public Room Get(int id) => Rooms.FirstOrDefault(x => x.Id == id);
+        //static List<Room> Rooms { get; }
+        //static RoomService()
+        //{
+        //    Rooms = new List<Room>
+        //    {
+        //        new Room { Id = 1, Name = "Colorado", Places = 10 },
+        //        new Room { Id = 2, Name = "Minesota", Places = 5 },
+        //        new Room { Id = 3, Name = "New York", Places = 15}
+        //    };
+        //}
+
+        public List<Room> GetAll() => _roomService.GetAll();
+        public Room Get(int id) => _roomService.Get(id);  //Rooms.FirstOrDefault(x => x.Id == id);
     }
 }

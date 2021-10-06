@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "fRI+TDhvrGUIKYbSnIKxTox15RwUUXUGoUADvSBDX21ZOYkvu+CIcQEC7PZ71iCj4H5quYgEpZ7FnlbQM66EFA==",
+  "dgSpecHash": "d8pdKRejVUzmt9Ix+d3R2xxDMcS4J4E2tT/nR7k4miJ5VJsZgNKZkxKS6hrTkQdBqWWMwQIIXN0f0UoXkXOcJA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\fires\\source\\repos\\BookingRooms\\BookingRooms.csproj",
+  "projectFilePath": "C:\\Users\\fires\\source\\repos\\BookingRepository\\BookingRooms\\BookingRooms.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

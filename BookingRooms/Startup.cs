@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BookingRooms.Interfaces;
 using BookingRooms.Services;
+using BookingRooms.Repository;
 
 namespace BookingRooms
 {
@@ -30,6 +31,7 @@ namespace BookingRooms
             services.AddControllers();
 
             services.AddScoped<IRoomService, RoomService>();
+            services.AddScoped<IRoomRepository, RoomRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
