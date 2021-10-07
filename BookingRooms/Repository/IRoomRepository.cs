@@ -6,7 +6,7 @@ using BookingRooms.Models;
 
 namespace BookingRooms.Repository
 {
-    interface IRoomRepository
+    public interface IRoomRepository
     {
         List<Room> GetAll();
         Room Get(int id);

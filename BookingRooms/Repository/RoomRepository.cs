@@ -9,7 +9,6 @@ namespace BookingRooms.Repository
 {
     public class RoomRepository : IRoomRepository
     {
-
         static List<Room> Rooms { get; }
         static RoomRepository()
         {

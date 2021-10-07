@@ -4,16 +4,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using BookingRooms.Models;
 using BookingRooms.Interfaces;
+using BookingRooms.Repository;
 
 namespace BookingRooms.Services
 {
     public class RoomService : IRoomService
     {
 
-        private IRoomService _roomService;
-        public RoomService(IRoomService roomService)
+        private IRoomRepository _roomRepository;
+        public RoomService(IRoomRepository roomRepository)
         {
-            _roomService = roomService;
+            _roomRepository = roomRepository;
         }
 
         //static List<Room> Rooms { get; }
@@ -27,7 +28,7 @@ namespace BookingRooms.Services
         //    };
         //}
 
-        public List<Room> GetAll() => _roomService.GetAll();
-        public Room Get(int id) => _roomService.Get(id);  //Rooms.FirstOrDefault(x => x.Id == id);
+        public List<Room> GetAll() => _roomRepository.GetAll();
+        public Room Get(int id) => _roomRepository.Get(id);  //Rooms.FirstOrDefault(x => x.Id == id);
     }
 }
