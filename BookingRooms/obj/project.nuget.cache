@@ -1,8 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "d8pdKRejVUzmt9Ix+d3R2xxDMcS4J4E2tT/nR7k4miJ5VJsZgNKZkxKS6hrTkQdBqWWMwQIIXN0f0UoXkXOcJA==",
+  "dgSpecHash": "62qrQ5gFCXVvyX+0cQ8NxrKQ8pn18W8i1Ch+P1kxVZcKyZBEefxXFMPy7sbJpoQc05KD5/9M+zAGuBEZg4Ja4A==",
   "success": true,
   "projectFilePath": "C:\\Users\\fires\\source\\repos\\BookingRepository\\BookingRooms\\BookingRooms.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\fires\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "C:\\Users\\fires\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\fires\\.nuget\\packages\\swashbuckle.aspnetcore\\6.2.2\\swashbuckle.aspnetcore.6.2.2.nupkg.sha512",
+    "C:\\Users\\fires\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.2.2\\swashbuckle.aspnetcore.swagger.6.2.2.nupkg.sha512",
+    "C:\\Users\\fires\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.2.2\\swashbuckle.aspnetcore.swaggergen.6.2.2.nupkg.sha512",
+    "C:\\Users\\fires\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.2.2\\swashbuckle.aspnetcore.swaggerui.6.2.2.nupkg.sha512"
+  ],
   "logs": []
 }
