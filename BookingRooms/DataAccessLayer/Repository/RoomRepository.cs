@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using Microsoft.AspNetCore.Mvc;
+
+
 
 namespace BookingRooms.Repository
 {
@@ -22,5 +25,16 @@ namespace BookingRooms.Repository
 
         public List<Room> GetAll() => Rooms;
         public Room Get(int id) => Rooms.FirstOrDefault(x => x.Id == id);
+
+        public Room Add(Room room)
+        {
+            using (DBContext.BRoomsContext context = new DBContext.BRoomsContext())
+            {
+                context.Rooms.Add(room);
+                context.SaveChanges();
+
+                return room;       
+            }
+        }
     }
 }

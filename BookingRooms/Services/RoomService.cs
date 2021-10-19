@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BookingRooms.Models;
 using BookingRooms.Interfaces;
 using BookingRooms.Repository;
+using BookingRooms.DBContext;
 
 namespace BookingRooms.Services
 {
@@ -30,5 +31,7 @@ namespace BookingRooms.Services
 
         public List<Room> GetAll() => _roomRepository.GetAll();
         public Room Get(int id) => _roomRepository.Get(id);  //Rooms.FirstOrDefault(x => x.Id == id);
+        public Room Add(Room room) => _roomRepository.Add(room);
+        
     }
 }

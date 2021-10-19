@@ -28,8 +28,15 @@ namespace BookingRooms.Controllers
             var room = _roomService.Get(id);
 
             if (room == null)
-                return NotFound();
+                return NotFound(); 
             return room;
+        }
+
+        [HttpPost]
+        public IActionResult Create(Room room)
+        {
+            _roomService.Add(room);
+            return CreatedAtAction(nameof(Create), new { id = room.Id }, room);
         }
     }
 }

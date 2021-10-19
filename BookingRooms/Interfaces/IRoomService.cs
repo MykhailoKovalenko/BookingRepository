@@ -10,5 +10,6 @@ namespace BookingRooms.Interfaces
     {
         public List<Room> GetAll();
         public Room Get(int id);
+        public Room Add(Room room);
     }
 }
