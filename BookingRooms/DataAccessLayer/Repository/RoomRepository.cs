@@ -12,19 +12,24 @@ namespace BookingRooms.Repository
 {
     public class RoomRepository : IRoomRepository
     {
-        static List<Room> Rooms { get; }
-        static RoomRepository()
+        public List<Room> GetAll()
         {
-            Rooms = new List<Room>
+            using (DBContext.BRoomsContext context = new DBContext.BRoomsContext())
             {
-                new Room { Id = 1, Name = "Colorado", Places = 10 },
-                new Room { Id = 2, Name = "Minesota", Places = 5 },
-                new Room { Id = 3, Name = "New York", Places = 15}
-            };
+                List<Room> rooms = context.Rooms.ToList();          
+               
+                return rooms;
+            }
         }
+        public Room Get(int id)
+        {
+            using (DBContext.BRoomsContext context = new DBContext.BRoomsContext())
+            {
+                Room room = context.Rooms.Find(id);
 
-        public List<Room> GetAll() => Rooms;
-        public Room Get(int id) => Rooms.FirstOrDefault(x => x.Id == id);
+                return room;
+            }
+        }
 
         public Room Add(Room room)
         {
@@ -34,6 +39,34 @@ namespace BookingRooms.Repository
                 context.SaveChanges();
 
                 return room;       
+            }
+        }
+
+        public Room Update(Room room)
+        {
+            using (DBContext.BRoomsContext context = new DBContext.BRoomsContext())
+            {
+                Room existingRoom = context.Rooms.Find(room.Id);
+
+                existingRoom.Name = room.Name;
+                existingRoom.Places = room.Places;
+ 
+                context.SaveChanges();
+
+                return existingRoom;
+            }
+        }
+
+        public Room Delete(int id)
+        {
+            using (DBContext.BRoomsContext context = new DBContext.BRoomsContext())
+            {
+                Room existingRoom = context.Rooms.Find(id);
+
+                context.Rooms.Remove(existingRoom);
+                context.SaveChanges();
+
+                return existingRoom;
             }
         }
     }

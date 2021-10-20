@@ -38,5 +38,33 @@ namespace BookingRooms.Controllers
             _roomService.Add(room);
             return CreatedAtAction(nameof(Create), new { id = room.Id }, room);
         }
+
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, Room room)
+        {
+            if (id != room.Id)
+                return BadRequest();
+
+            var existingRoom = _roomService.Get(id);
+            if (existingRoom == null)
+                return NotFound();
+
+            _roomService.Update(room);
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var room = _roomService.Get(id);
+
+            if (room == null)
+                return NotFound();
+
+            _roomService.Delete(id);
+
+            return NoContent();
+        }
     }
 }

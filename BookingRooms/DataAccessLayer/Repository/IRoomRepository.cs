@@ -11,5 +11,7 @@ namespace BookingRooms.Repository
         List<Room> GetAll();
         Room Get(int id);
         Room Add(Room room);
+        Room Update(Room room);
+        Room Delete(int id);
     }
 }

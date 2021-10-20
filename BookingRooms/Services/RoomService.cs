@@ -18,20 +18,11 @@ namespace BookingRooms.Services
             _roomRepository = roomRepository;
         }
 
-        //static List<Room> Rooms { get; }
-        //static RoomService()
-        //{
-        //    Rooms = new List<Room>
-        //    {
-        //        new Room { Id = 1, Name = "Colorado", Places = 10 },
-        //        new Room { Id = 2, Name = "Minesota", Places = 5 },
-        //        new Room { Id = 3, Name = "New York", Places = 15}
-        //    };
-        //}
-
         public List<Room> GetAll() => _roomRepository.GetAll();
-        public Room Get(int id) => _roomRepository.Get(id);  //Rooms.FirstOrDefault(x => x.Id == id);
+        public Room Get(int id) => _roomRepository.Get(id);
         public Room Add(Room room) => _roomRepository.Add(room);
-        
+        public Room Update(Room room) => _roomRepository.Update(room);
+        public Room Delete(int id) => _roomRepository.Delete(id);
+
     }
 }

@@ -8,8 +8,11 @@ namespace BookingRooms.Interfaces
 {
     public interface IRoomService
     {
-        public List<Room> GetAll();
-        public Room Get(int id);
-        public Room Add(Room room);
+        List<Room> GetAll();
+        Room Get(int id);
+        Room Add(Room room);
+        Room Update(Room room);
+        Room Delete(int id);
+
     }
 }
