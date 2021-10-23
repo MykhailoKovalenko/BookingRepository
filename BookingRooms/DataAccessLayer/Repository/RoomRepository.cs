@@ -8,17 +8,17 @@ using Microsoft.AspNetCore.Mvc;
 
 
 
-namespace BookingRooms.Repository
+namespace BookingRooms.DataAccessLayer.Repository
 {
     public class RoomRepository : IRoomRepository
     {
-        public List<Room> GetAll()
+        public IEnumerable<Room> GetAll()
         {
             using (DBContext.BRoomsContext context = new DBContext.BRoomsContext())
             {
-                List<Room> rooms = context.Rooms.ToList();          
-               
-                return rooms;
+                IEnumerable<Room> rooms = context.Rooms.ToList().AsEnumerable();
+
+                return rooms;                
             }
         }
         public Room Get(int id)
@@ -50,7 +50,9 @@ namespace BookingRooms.Repository
 
                 existingRoom.Name = room.Name;
                 existingRoom.Places = room.Places;
- 
+
+                //context.Update(room);
+
                 context.SaveChanges();
 
                 return existingRoom;

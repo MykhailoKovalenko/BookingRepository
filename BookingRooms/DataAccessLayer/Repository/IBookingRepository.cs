@@ -6,12 +6,8 @@ using BookingRooms.Models;
 
 namespace BookingRooms.DataAccessLayer.Repository
 {
-    public interface IRoomRepository
+    public interface IBookingRepository
     {
-        IEnumerable<Room> GetAll();
-        Room Get(int id);
-        Room Add(Room room);
-        Room Update(Room room);
-        Room Delete(int id);
+        IEnumerable<Booking> GetBooking(DateTime startDate, DateTime endDate);
     }
 }

@@ -12,7 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BookingRooms.Interfaces;
 using BookingRooms.Services;
-using BookingRooms.Repository;
+using BookingRooms.DataAccessLayer.Repository;
 
 namespace BookingRooms
 {
@@ -32,6 +32,7 @@ namespace BookingRooms
             
             services.AddScoped<IRoomService, RoomService>();
             services.AddScoped<IRoomRepository, RoomRepository>();
+            services.AddScoped<IBookingRepository, BookingRepository>();
 
             services.AddSwaggerGen();
         }
@@ -53,6 +54,10 @@ namespace BookingRooms
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+
+                //endpoints.MapControllerRoute(
+                //        name: "default",
+                //        pattern: "{controller=Room/Index}/{action=Index}");
             });
 
             app.UseSwagger();

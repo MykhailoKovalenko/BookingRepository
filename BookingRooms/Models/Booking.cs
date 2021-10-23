@@ -12,5 +12,7 @@ namespace BookingRooms.Models
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public User Author {get; set; }
+        public int RoomId { get; set; }
+        public int AuthorId { get; set; }
     }
 }

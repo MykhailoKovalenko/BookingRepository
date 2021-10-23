@@ -8,11 +8,12 @@ namespace BookingRooms.Interfaces
 {
     public interface IRoomService
     {
-        List<Room> GetAll();
+        IEnumerable<Room> GetAll();
         Room Get(int id);
         Room Add(Room room);
         Room Update(Room room);
         Room Delete(int id);
+        IEnumerable<Room> GetFree(DateTime startDate, DateTime endDate);
 
     }
 }

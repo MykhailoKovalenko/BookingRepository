@@ -19,8 +19,16 @@ namespace BookingRooms.Controllers
             _roomService = roomService;
         }
 
+        [HttpGet("Index")]
+        public IActionResult Index()
+        {
+            var controller = RouteData.Values["controller"].ToString();
+            var action = RouteData.Values["action"].ToString();
+            return Content($"controller: {controller} | action: {action}");
+        }
+
         [HttpGet]
-        public ActionResult<List<Room>> GetAll() => _roomService.GetAll();
+        public ActionResult<IEnumerable<Room>> GetAll() => _roomService.GetAll().ToList();
 
         [HttpGet("{id}")]
         public ActionResult<Room> Get(int id)
@@ -29,12 +37,22 @@ namespace BookingRooms.Controllers
 
             if (room == null)
                 return NotFound(); 
-            return room;
+            return Ok(room);
         }
+
+      
+        [HttpGet("GetFree")]
+        public ActionResult<IEnumerable<Room>> GetFree(DateTime start, DateTime end) => _roomService.GetFree(start, end).ToList();
 
         [HttpPost]
         public IActionResult Create(Room room)
         {
+            if (room == null)
+                return BadRequest();
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             _roomService.Add(room);
             return CreatedAtAction(nameof(Create), new { id = room.Id }, room);
         }
