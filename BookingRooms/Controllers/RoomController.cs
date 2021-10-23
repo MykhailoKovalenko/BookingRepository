@@ -28,9 +28,12 @@ namespace BookingRooms.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Room>))]
         public ActionResult<IEnumerable<Room>> GetAll() => _roomService.GetAll().ToList();
 
         [HttpGet("{id}")]
+        [ProducesResponseType(200, Type = typeof(Room))]
+        [ProducesResponseType(404)]
         public ActionResult<Room> Get(int id)
         {
             var room = _roomService.Get(id);
@@ -40,12 +43,15 @@ namespace BookingRooms.Controllers
             return Ok(room);
         }
 
-      
+
         [HttpGet("GetFree")]
-        public ActionResult<IEnumerable<Room>> GetFree(DateTime start, DateTime end) => _roomService.GetFree(start, end).ToList();
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Room>))]
+        public ActionResult<IEnumerable<Room>> GetFree([FromQuery] DateTime start, [FromQuery] DateTime end) => _roomService.GetFree(start, end).ToList();
 
         [HttpPost]
-        public IActionResult Create(Room room)
+        [ProducesResponseType(201, Type = typeof(Room))]
+        [ProducesResponseType(400)]
+        public IActionResult Create([FromBody] Room room)
         {
             if (room == null)
                 return BadRequest();
@@ -58,10 +64,16 @@ namespace BookingRooms.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, Room room)
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult Update(int id, [FromBody] Room room)
         {
-            if (id != room.Id)
+            if (room == null || id != room.Id)
                 return BadRequest();
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
             var existingRoom = _roomService.Get(id);
             if (existingRoom == null)
@@ -73,6 +85,8 @@ namespace BookingRooms.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
         public IActionResult Delete(int id)
         {
             var room = _roomService.Get(id);
