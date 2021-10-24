@@ -33,7 +33,7 @@ namespace BookingRooms
             services.AddControllers();
 
             services.AddDbContext<BRoomsContext>(
-                    options => options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB; Database=BookingRoomsDB; Trusted_Connection=True; MultipleActiveResultSets=true"));
+                    options => options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
 
             services.AddScoped<IRoomService, RoomService>();
             services.AddScoped<IRoomRepository, RoomRepository>();
