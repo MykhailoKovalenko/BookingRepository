@@ -13,6 +13,8 @@ using System.Threading.Tasks;
 using BookingRooms.Interfaces;
 using BookingRooms.Services;
 using BookingRooms.DataAccessLayer.Repository;
+using BookingRooms.DBContext;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookingRooms
 {
@@ -29,7 +31,10 @@ namespace BookingRooms
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            
+
+            services.AddDbContext<BRoomsContext>(
+                    options => options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB; Database=BookingRoomsDB; Trusted_Connection=True; MultipleActiveResultSets=true"));
+
             services.AddScoped<IRoomService, RoomService>();
             services.AddScoped<IRoomRepository, RoomRepository>();
             services.AddScoped<IBookingRepository, BookingRepository>();

@@ -1,4 +1,5 @@
-﻿using BookingRooms.Models;
+﻿using BookingRooms.DBContext;
+using BookingRooms.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,20 +9,22 @@ namespace BookingRooms.DataAccessLayer.Repository
 {
     public class BookingRepository : IBookingRepository
     {
-        
+
+        private readonly BRoomsContext _context;
+        public BookingRepository(BRoomsContext context)
+        {
+            _context = context;
+        }
+
         public IEnumerable<Booking> GetBooking(DateTime startDate, DateTime endDate)
         {
-            using (DBContext.BRoomsContext context = new DBContext.BRoomsContext())
-            {
-                var booking = context.Bookings.Where(i => i.Start < endDate && startDate < i.End);
-                
-                
-                //i => (startDate < i.Start || startDate >= i.End) && (endDate <= i.Start || endDate > i.End));
+            var booking = _context.Bookings.Where(i => i.Start < endDate && startDate < i.End);
 
-                    // i => i.Start >= startDate && i.End <= startDate 
+            //i => (startDate < i.Start || startDate >= i.End) && (endDate <= i.Start || endDate > i.End));
 
-                return booking;
-            }
+            // i => i.Start >= startDate && i.End <= startDate 
+
+            return booking;
         }
     }
 }

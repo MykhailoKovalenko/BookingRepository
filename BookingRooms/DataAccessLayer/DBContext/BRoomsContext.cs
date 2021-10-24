@@ -9,9 +9,9 @@ namespace BookingRooms.DBContext
 {
     public class BRoomsContext : DbContext
     {
-
         
-        public BRoomsContext()
+        public BRoomsContext(DbContextOptions<BRoomsContext> options)
+             : base(options)
         {
             //Database.EnsureDeleted();
             //Database.EnsureCreated();    
@@ -23,20 +23,25 @@ namespace BookingRooms.DBContext
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB; Database=BookingRoomsDB; Trusted_Connection=True");
+            //optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB; Database=BookingRoomsDB; Trusted_Connection=True");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            //modelBuilder.Entity<Room>()
+            //    .Property(room => room.Name)
+            //    .IsRequired();
+            //.HasAnnotation("ErrorMessage", "Name is is not specified");
 
-            /*modelBuilder.Entity<Room>().HasData(
-                new Room [] {
-                    new Room { Id = 1, Name = "Ohio", Places = 12 },
-                    new Room { Id = 2, Name = "Nebraska", Places = 10 },
-                    new Room { Id = 3, Name = "Colorado", Places = 15 },
-                    new Room { Id = 4, Name = "New York", Places = 20 }
-                });*/
+            // [Required(ErrorMessage = "Name is not specified")]
+
+            //modelBuilder.Entity<Room>().HasData(
+            //    new Room[] {
+            //        new Room { Id = 1, Name = "Ohio", Places = 12 },
+            //        new Room { Id = 2, Name = "Nebraska", Places = 10 },
+            //        new Room { Id = 3, Name = "Colorado", Places = 15 },
+            //        new Room { Id = 4, Name = "New York", Places = 20 }
+            //    });
 
             /*modelBuilder.Entity<Booking>().HasData(
                 new Booking[] {
@@ -45,6 +50,8 @@ namespace BookingRooms.DBContext
                     new Room { Id = 3, Name = "Colorado", Places = 15 },
                     new Room { Id = 4, Name = "New York", Places = 20 }
                 });*/
+
+            base.OnModelCreating(modelBuilder);
         }
 
     }

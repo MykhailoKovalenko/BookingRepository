@@ -3,73 +3,68 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 using Microsoft.AspNetCore.Mvc;
-
-
+using Microsoft.EntityFrameworkCore;
+using BookingRooms.DBContext;
 
 namespace BookingRooms.DataAccessLayer.Repository
 {
     public class RoomRepository : IRoomRepository
     {
+        private readonly BRoomsContext _context;
+        public RoomRepository(BRoomsContext context)
+        {
+            _context = context;
+        }
+
         public IEnumerable<Room> GetAll()
         {
-            using (DBContext.BRoomsContext context = new DBContext.BRoomsContext())
-            {
-                IEnumerable<Room> rooms = context.Rooms.ToList().AsEnumerable();
+            IQueryable<Room> query = _context.Set<Room>();
 
-                return rooms;                
-            }
+            return query.AsEnumerable();
+            
+            // alternative variant, check!
+            //IEnumerable<Room> rooms = _context.Rooms.ToList().AsEnumerable();
+            //return rooms;
         }
+
         public Room Get(int id)
         {
-            using (DBContext.BRoomsContext context = new DBContext.BRoomsContext())
-            {
-                Room room = context.Rooms.Find(id);
+            Room room = _context.Rooms.Find(id);
 
-                return room;
-            }
+            return room;
         }
 
         public Room Add(Room room)
         {
-            using (DBContext.BRoomsContext context = new DBContext.BRoomsContext())
-            {
-                context.Rooms.Add(room);
-                context.SaveChanges();
+            _context.Rooms.Add(room);
+            _context.SaveChanges();
 
-                return room;       
-            }
+            return room;
         }
 
         public Room Update(Room room)
         {
-            using (DBContext.BRoomsContext context = new DBContext.BRoomsContext())
-            {
-                Room existingRoom = context.Rooms.Find(room.Id);
+            Room existingRoom = _context.Rooms.Find(room.Id);
 
-                existingRoom.Name = room.Name;
-                existingRoom.Places = room.Places;
+            existingRoom.Name = room.Name;
+            existingRoom.Places = room.Places;
 
-                //context.Update(room);
+            //context.Update(room);
 
-                context.SaveChanges();
+            _context.SaveChanges();
 
-                return existingRoom;
-            }
+            return existingRoom;
         }
 
         public Room Delete(int id)
         {
-            using (DBContext.BRoomsContext context = new DBContext.BRoomsContext())
-            {
-                Room existingRoom = context.Rooms.Find(id);
+            Room existingRoom = _context.Rooms.Find(id);
 
-                context.Rooms.Remove(existingRoom);
-                context.SaveChanges();
+            _context.Rooms.Remove(existingRoom);
+            _context.SaveChanges();
 
-                return existingRoom;
-            }
+            return existingRoom;
         }
     }
 }

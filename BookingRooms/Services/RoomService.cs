@@ -32,7 +32,7 @@ namespace BookingRooms.Services
 
             //var bookedRooms = _bookingRepository.GetBooking(startDate, endDate).Select(i => new { room = i.Room, b = i.Author });
 
-            IEnumerable<Room> freeRooms = _roomRepository.GetAll().Where(i => bookedRoomIds.Contains(i.Id));
+            IEnumerable<Room> freeRooms = _roomRepository.GetAll().Where(i => !bookedRoomIds.Contains(i.Id));
 
             return freeRooms;
         }
