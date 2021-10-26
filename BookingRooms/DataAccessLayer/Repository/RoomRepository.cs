@@ -49,6 +49,7 @@ namespace BookingRooms.DataAccessLayer.Repository
 
             existingRoom.Name = room.Name;
             existingRoom.Places = room.Places;
+            existingRoom.isProjector = room.isProjector;
 
             //context.Update(room);
 
