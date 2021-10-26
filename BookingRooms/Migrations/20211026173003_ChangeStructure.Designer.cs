@@ -4,14 +4,16 @@ using BookingRooms.DBContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BookingRooms.Migrations
 {
     [DbContext(typeof(BRoomsContext))]
-    partial class AppContextModelSnapshot : ModelSnapshot
+    [Migration("20211026173003_ChangeStructure")]
+    partial class ChangeStructure
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -88,13 +90,13 @@ namespace BookingRooms.Migrations
             modelBuilder.Entity("BookingRooms.Models.Booking", b =>
                 {
                     b.HasOne("BookingRooms.Models.Room", "Room")
-                        .WithMany("Bookings")
+                        .WithMany()
                         .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("BookingRooms.Models.User", "User")
-                        .WithMany("Bookings")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -102,16 +104,6 @@ namespace BookingRooms.Migrations
                     b.Navigation("Room");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("BookingRooms.Models.Room", b =>
-                {
-                    b.Navigation("Bookings");
-                });
-
-            modelBuilder.Entity("BookingRooms.Models.User", b =>
-                {
-                    b.Navigation("Bookings");
                 });
 #pragma warning restore 612, 618
         }

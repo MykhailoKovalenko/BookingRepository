@@ -11,11 +11,11 @@ namespace BookingRooms.Models
         [Required(ErrorMessage = "Booking Id is not specified")]
         [Range(1, int.MaxValue, ErrorMessage = "Value for {0} must be between {1} and {2}.")]
         public int? Id { get; set; }
-        public Room Room { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
-        public User Author {get; set; }
         public int RoomId { get; set; }
-        public int AuthorId { get; set; }
+        public int UserId { get; set; }
+        public virtual User User {get; set; }
+        public virtual Room Room { get; set; }     
     }
 }

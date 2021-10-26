@@ -15,6 +15,8 @@ namespace BookingRooms.Models
 
         [Required(ErrorMessage = "Places are not specified")]
         [Range(1, 500, ErrorMessage = "Value for {0} must be between {1} and {2}.")]
-        public int? Places { get; set; }
+        public int Places { get; set; }
+        public bool isProjector { get; set; }
+        public virtual ICollection<Booking> Bookings { get; set; }
     }
 }
