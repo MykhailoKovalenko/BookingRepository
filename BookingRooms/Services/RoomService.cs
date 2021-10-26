@@ -28,9 +28,7 @@ namespace BookingRooms.Services
 
         public IEnumerable<Room> GetFree(DateTime startDate, DateTime endDate)
         {
-            var bookedRoomIds = _bookingRepository.GetBooking(startDate, endDate).Select(i => i.RoomId);
-
-            //var bookedRooms = _bookingRepository.GetBooking(startDate, endDate).Select(i => new { room = i.Room, b = i.Author });
+            var bookedRoomIds = _bookingRepository.GetAllForPeriod(startDate, endDate).Select(i => i.RoomId);
 
             IEnumerable<Room> freeRooms = _roomRepository.GetAll().Where(i => !bookedRoomIds.Contains(i.Id));
 

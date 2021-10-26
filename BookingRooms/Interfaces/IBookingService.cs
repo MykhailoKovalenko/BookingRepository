@@ -1,12 +1,12 @@
-﻿using System;
+﻿using BookingRooms.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BookingRooms.Models;
 
-namespace BookingRooms.DataAccessLayer.Repository
+namespace BookingRooms.Interfaces
 {
-    public interface IBookingRepository
+    public interface IBookingService
     {
         IEnumerable<Booking> GetAllForPeriod(DateTime startDate, DateTime endDate);
         Booking Add(Booking booking);

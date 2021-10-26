@@ -19,7 +19,7 @@ namespace BookingRooms.DataAccessLayer.Repository
 
         public IEnumerable<Room> GetAll()
         {
-            IQueryable<Room> query = _context.Set<Room>();
+            IQueryable<Room> query = _context.Rooms; // Set<Room>();
 
             return query.AsEnumerable();
             
