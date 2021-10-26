@@ -37,6 +37,8 @@ namespace BookingRooms.DataAccessLayer.Repository
 
         public Room Add(Room room)
         {
+            room.Bookings = new List<Booking>();
+
             _context.Rooms.Add(room);
             _context.SaveChanges();
 

@@ -25,7 +25,6 @@ namespace BookingRooms.Services
         public Room Add(Room room) => _roomRepository.Add(room);
         public Room Update(Room room) => _roomRepository.Update(room);
         public Room Delete(int id) => _roomRepository.Delete(id);
-
         public IEnumerable<Room> GetFree(DateTime startDate, DateTime endDate)
         {
             var bookedRoomIds = _bookingRepository.GetAllForPeriod(startDate, endDate).Select(i => i.RoomId);

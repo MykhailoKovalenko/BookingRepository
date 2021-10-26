@@ -23,7 +23,7 @@ namespace BookingRooms.DBContext
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB; Database=BookingRoomsDB; Trusted_Connection=True");
+            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

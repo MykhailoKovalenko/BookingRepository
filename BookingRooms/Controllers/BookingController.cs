@@ -13,9 +13,23 @@ namespace BookingRooms.Controllers
     public class BookingController : ControllerBase
     {
         private IBookingService _bookingService;
-        public BookingController(IBookingService bookingService)
+        private IRoomService _roomService;
+        public BookingController(IBookingService bookingService, IRoomService roomService)
         {
             _bookingService = bookingService;
+            _roomService = roomService;
+        }
+
+        [HttpGet("{id}")]
+        [ProducesResponseType(200, Type = typeof(Booking))]
+        [ProducesResponseType(404)]
+        public ActionResult<Booking> Get(int id)
+        {
+            var booking = _bookingService.Get(id);
+
+            if (booking == null)
+                return NotFound();
+            return Ok(booking);
         }
 
         [HttpPost]
@@ -29,8 +43,33 @@ namespace BookingRooms.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
+            var freeRoomIds = _roomService.GetFree(booking.Start, booking.End).Select(i => i.Id);
+            if (!freeRoomIds.Contains(booking.RoomId))
+                return UnprocessableEntity(new { error = "Sorry! The room is occupied at this time.", roomId = booking.RoomId });
+
             _bookingService.Add(booking);
             return CreatedAtAction(nameof(Create), new { id = booking.Id }, booking);
+        }
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult Update(int id, [FromBody] Booking booking)
+        {
+            if (booking == null || id != booking.Id)
+                return BadRequest();
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var existingBooking = _bookingService.Get(id);
+            if (existingBooking == null)
+                return NotFound();
+
+            _bookingService.Update(booking);
+
+            return NoContent();
         }
 
     }

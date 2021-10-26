@@ -17,7 +17,8 @@ namespace BookingRooms.Services
         }
 
         public IEnumerable<Booking> GetAllForPeriod(DateTime startDate, DateTime endDate) => _bookingRepository.GetAllForPeriod(startDate, endDate);
+        public Booking Get(int id) => _bookingRepository.Get(id);
         public Booking Add(Booking booking) => _bookingRepository.Add(booking);
-
+        public Booking Update(Booking booking) => _bookingRepository.Update(booking);
     }
 }

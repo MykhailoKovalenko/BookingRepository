@@ -15,25 +15,37 @@ namespace BookingRooms.DataAccessLayer.Repository
         {
             _context = context;
         }
-
         public IEnumerable<Booking> GetAllForPeriod(DateTime startDate, DateTime endDate)
         {
-            var booking = _context.Bookings.Where(i => i.Start < endDate && startDate < i.End);
-
-            //i => (startDate < i.Start || startDate >= i.End) && (endDate <= i.Start || endDate > i.End));
-
-            // i => i.Start >= startDate && i.End <= startDate 
+            var booking = _context.Bookings.Where(i => i.Start < endDate && startDate < i.End); 
 
             return booking;
         }
-
-        public Booking Add(Booking booking) //(int roomId, int userId, DateTime startDate, DateTime endDate)
+        public Booking Get(int id)
         {
-            //Booking newBooking = new Booking() { RoomId = roomId, UserId = userId, Start = startDate, End = endDate };
+            Booking booking = _context.Bookings.Find(id);
+
+            return booking;
+        }
+        public Booking Add(Booking booking)
+        {
             _context.Bookings.Add(booking);
             _context.SaveChanges();
 
             return booking;
+        }
+        public Booking Update(Booking booking)
+        {
+            Booking existingbooking = _context.Bookings.Find(booking.Id);
+
+            existingbooking.Start = booking.Start;
+            existingbooking.End = booking.End;
+            existingbooking.RoomId = booking.RoomId;
+            existingbooking.UserId = booking.UserId; 
+
+            _context.SaveChanges();
+
+            return existingbooking;
         }
     }
 }
