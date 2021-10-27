@@ -1,23 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\volod\\BookingRepository\\BookingRooms\\BookingRooms.csproj": {}
+    "C:\\Users\\fires\\source\\repos\\BookingRepository\\BookingRooms\\BookingRooms.csproj": {}
   },
   "projects": {
-    "C:\\Users\\volod\\BookingRepository\\BookingRooms\\BookingRooms.csproj": {
+    "C:\\Users\\fires\\source\\repos\\BookingRepository\\BookingRooms\\BookingRooms.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\volod\\BookingRepository\\BookingRooms\\BookingRooms.csproj",
+        "projectUniqueName": "C:\\Users\\fires\\source\\repos\\BookingRepository\\BookingRooms\\BookingRooms.csproj",
         "projectName": "BookingRooms",
-        "projectPath": "C:\\Users\\volod\\BookingRepository\\BookingRooms\\BookingRooms.csproj",
-        "packagesPath": "C:\\Users\\volod\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\volod\\BookingRepository\\BookingRooms\\obj\\",
+        "projectPath": "C:\\Users\\fires\\source\\repos\\BookingRepository\\BookingRooms\\BookingRooms.csproj",
+        "packagesPath": "C:\\Users\\fires\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\fires\\source\\repos\\BookingRepository\\BookingRooms\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\volod\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\fires\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -29,6 +30,7 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -40,11 +42,8 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "dependencies": {
-            "Microsoft.AspNetCore.Mvc.Abstractions": {
-              "target": "Package",
-              "version": "[2.2.0, )"
-            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[5.0.10, )"
@@ -62,10 +61,6 @@
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.2.2, )"
-            },
-            "System.Text.Json": {
-              "target": "Package",
-              "version": "[5.0.2, )"
             }
           },
           "imports": [
@@ -86,7 +81,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     }

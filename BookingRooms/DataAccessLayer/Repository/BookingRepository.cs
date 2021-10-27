@@ -1,6 +1,5 @@
 ﻿using BookingRooms.DBContext;
 using BookingRooms.Models;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,10 +26,6 @@ namespace BookingRooms.DataAccessLayer.Repository
             Booking booking = _context.Bookings.Find(id);
 
             return booking;
-        }
-        public Task<Booking> GetAsync(int id)
-        {
-            return _context.Bookings.Include(i => i.User).Include(i => i.Room).FirstOrDefaultAsync(i => i.Id == id);
         }
         public Booking Add(Booking booking)
         {

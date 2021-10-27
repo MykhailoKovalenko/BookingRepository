@@ -22,10 +22,6 @@ namespace BookingRooms.DataAccessLayer.Repository
             IQueryable<Room> query = _context.Rooms; // Set<Room>();
 
             return query.AsEnumerable();
-            
-            // alternative variant, check!
-            //IEnumerable<Room> rooms = _context.Rooms.ToList().AsEnumerable();
-            //return rooms;
         }
 
         public Room Get(int id)
@@ -37,8 +33,6 @@ namespace BookingRooms.DataAccessLayer.Repository
 
         public Room Add(Room room)
         {
-            room.Bookings = new List<Booking>();
-
             _context.Rooms.Add(room);
             _context.SaveChanges();
 
