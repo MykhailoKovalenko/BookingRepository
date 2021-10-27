@@ -20,5 +20,7 @@ namespace BookingRooms.Services
         public Booking Get(int id) => _bookingRepository.Get(id);
         public Booking Add(Booking booking) => _bookingRepository.Add(booking);
         public Booking Update(Booking booking) => _bookingRepository.Update(booking);
+        public Task<Booking> GetAsync(int id) => _bookingRepository.GetAsync(id);
+
     }
 }

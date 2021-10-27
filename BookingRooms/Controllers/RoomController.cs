@@ -29,7 +29,7 @@ namespace BookingRooms.Controllers
 
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Room>))]
-        public ActionResult<IEnumerable<Room>> GetAll() => Ok(_roomService.GetAll());
+        public ActionResult<IEnumerable<Room>> GetAll() => _roomService.GetAll().ToList();
 
         [HttpGet("{id}")]
         [ProducesResponseType(200, Type = typeof(Room))]
