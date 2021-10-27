@@ -28,6 +28,22 @@ namespace BookingRooms.DBContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            
+
+            //modelBuilder.Entity<Booking>()
+            //.HasOne(p => p.Room)
+            //.WithMany(b => b.Bookings)
+            //.HasForeignKey(p => p.RoomId);
+
+            
+
+            //modelBuilder.Entity<Booking>()
+            //.HasOne(p => p.User)
+            //.WithMany(b => b.Bookings)
+            //.HasForeignKey(p => p.UserId);
+
+
             //modelBuilder.Entity<Room>()
             //    .Property(room => room.Name)
             //    .IsRequired();
