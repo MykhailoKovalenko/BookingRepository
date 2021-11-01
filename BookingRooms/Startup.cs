@@ -15,6 +15,9 @@ using BookingRooms.Services;
 using BookingRooms.DataAccessLayer.Repository;
 using BookingRooms.DBContext;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Formatters;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace BookingRooms
 {
@@ -30,7 +33,14 @@ namespace BookingRooms
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers(options =>
+            {
+                options.OutputFormatters.RemoveType<SystemTextJsonOutputFormatter>();
+                options.OutputFormatters.Add(new SystemTextJsonOutputFormatter(new JsonSerializerOptions(JsonSerializerDefaults.Web)
+                {
+                    ReferenceHandler = ReferenceHandler.Preserve,
+                }));
+            });
 
             services.AddDbContext<BRoomsContext>(
                     options => options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
