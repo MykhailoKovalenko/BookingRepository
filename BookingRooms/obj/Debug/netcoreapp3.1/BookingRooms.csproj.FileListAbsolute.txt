@@ -88,3 +88,6 @@ C:\Users\fires\source\repos\BookingRepository\BookingRooms\bin\Debug\netcoreapp3
 C:\Users\fires\source\repos\BookingRepository\BookingRooms\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.pdb
 C:\Users\fires\source\repos\BookingRepository\BookingRooms\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 C:\Users\fires\source\repos\BookingRepository\BookingRooms\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\fires\source\repos\BookingRepository\BookingRooms\bin\Debug\netcoreapp3.1\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\fires\source\repos\BookingRepository\BookingRooms\bin\Debug\netcoreapp3.1\System.Text.Encodings.Web.dll
+C:\Users\fires\source\repos\BookingRepository\BookingRooms\bin\Debug\netcoreapp3.1\System.Text.Json.dll

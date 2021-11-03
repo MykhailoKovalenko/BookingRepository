@@ -20,18 +20,32 @@ namespace BookingRooms.Services
             _bookingRepository = bookingRepository;
         }
 
-        public IEnumerable<Room> GetAll() => _roomRepository.GetAll();
-        public Room Get(int id) => _roomRepository.Get(id);
+        public async IAsyncEnumerable<Room> GetAllAsync()
+        {
+            await foreach (var room in _roomRepository.GetAllAsync())
+            {
+                yield return room;
+            }
+        } 
+
+        public Task<Room> GetAsync(int id) => _roomRepository.GetAsync(id);
         public Room Add(Room room) => _roomRepository.Add(room);
         public Room Update(Room room) => _roomRepository.Update(room);
         public Room Delete(int id) => _roomRepository.Delete(id);
-        public IEnumerable<Room> GetFree(DateTime startDate, DateTime endDate)
+        public async IAsyncEnumerable<Room> GetFreeAsync(DateTime startDate, DateTime endDate)
         {
-            var bookedRoomIds = _bookingRepository.GetAllForPeriod(startDate, endDate).Select(i => i.RoomId);
+            List<int> bookedRoomIds = new List<int>();
 
-            IEnumerable<Room> freeRooms = _roomRepository.GetAll().Where(i => !bookedRoomIds.Contains(i.Id));
+            await foreach (var booking in _bookingRepository.GetAllForPeriodAsync(startDate, endDate))
+            {
+                bookedRoomIds.Add(booking.RoomId);
+            }
 
-            return freeRooms;
+            await foreach (var room in _roomRepository.GetAllAsync())
+            {
+                if (!bookedRoomIds.Contains(room.Id))
+                    yield return room;    
+            }
         }
     }
 }

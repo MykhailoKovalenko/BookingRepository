@@ -36,6 +36,7 @@ namespace BookingRooms.Controllers
         [HttpPost]
         [ProducesResponseType(201, Type = typeof(Booking))]
         [ProducesResponseType(400)]
+        [ProducesResponseType(422)]
         public IActionResult Create([FromBody] Booking booking)
         {
             if (booking == null)
@@ -44,9 +45,9 @@ namespace BookingRooms.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var freeRoomIds = _roomService.GetFree(booking.Start, booking.End).Select(i => i.Id);
-            if (!freeRoomIds.Contains(booking.RoomId))
-                return UnprocessableEntity(new { error = "Sorry! The room is occupied at this time.", roomId = booking.RoomId });
+            //var freeRoomIds = _roomService.GetFree(booking.Start, booking.End).Select(i => i.Id);
+            //if (!freeRoomIds.Contains(booking.RoomId))
+            //    return UnprocessableEntity(new { error = "Sorry! The room is occupied at this time.", roomId = booking.RoomId });
 
             _bookingService.Add(booking);
             return CreatedAtAction(nameof(Create), new { id = booking.Id }, booking);
@@ -64,7 +65,7 @@ namespace BookingRooms.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var existingBooking = _bookingService.Get(id);
+            var existingBooking = _bookingService.GetAsync(id);
             if (existingBooking == null)
                 return NotFound();
 

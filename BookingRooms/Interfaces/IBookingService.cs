@@ -8,8 +8,7 @@ namespace BookingRooms.Interfaces
 {
     public interface IBookingService
     {
-        IEnumerable<Booking> GetAllForPeriod(DateTime startDate, DateTime endDate);
-        Booking Get(int id);
+        IAsyncEnumerable<Booking> GetAllForPeriodAsync(DateTime startDate, DateTime endDate);
         Task<Booking> GetAsync(int id);
         Booking Add(Booking booking);
         Booking Update(Booking booking);

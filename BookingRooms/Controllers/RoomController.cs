@@ -29,14 +29,14 @@ namespace BookingRooms.Controllers
 
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Room>))]
-        public ActionResult<IEnumerable<Room>> GetAll() => _roomService.GetAll().ToList();
+        public IAsyncEnumerable<Room> GetAll() => _roomService.GetAllAsync();
 
         [HttpGet("{id}")]
         [ProducesResponseType(200, Type = typeof(Room))]
         [ProducesResponseType(404)]
-        public ActionResult<Room> Get(int id)
+        public async Task<ActionResult<Room>> Get(int id) 
         {
-            var room = _roomService.Get(id);
+            var room = await _roomService.GetAsync(id);
 
             if (room == null)
                 return NotFound(); 
@@ -46,7 +46,7 @@ namespace BookingRooms.Controllers
 
         [HttpGet("GetFree")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Room>))]
-        public ActionResult<IEnumerable<Room>> GetFree([FromQuery] DateTime start, [FromQuery] DateTime end) => _roomService.GetFree(start, end).ToList();
+        public IAsyncEnumerable<Room> GetFree([FromQuery] DateTime start, [FromQuery] DateTime end) => _roomService.GetFreeAsync(start, end);
 
         [HttpPost]
         [ProducesResponseType(201, Type = typeof(Room))]
@@ -75,7 +75,7 @@ namespace BookingRooms.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var existingRoom = _roomService.Get(id);
+            var existingRoom = _roomService.GetAsync(id);
             if (existingRoom == null)
                 return NotFound();
 
@@ -89,7 +89,7 @@ namespace BookingRooms.Controllers
         [ProducesResponseType(404)]
         public IActionResult Delete(int id)
         {
-            var room = _roomService.Get(id);
+            var room = _roomService.GetAsync(id);
 
             if (room == null)
                 return NotFound();

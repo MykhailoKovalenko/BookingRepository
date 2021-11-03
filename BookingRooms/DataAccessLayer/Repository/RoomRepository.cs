@@ -17,28 +17,25 @@ namespace BookingRooms.DataAccessLayer.Repository
             _context = context;
         }
 
-        public IEnumerable<Room> GetAll()
+        public async IAsyncEnumerable<Room> GetAllAsync()
         {
-            IQueryable<Room> query = _context.Rooms; // Set<Room>();
+            var enumerator = _context.Rooms.AsAsyncEnumerable().GetAsyncEnumerator();
 
-            return query.AsEnumerable();
-            
-            // alternative variant, check!
-            //IEnumerable<Room> rooms = _context.Rooms.ToList().AsEnumerable();
-            //return rooms;
+            while (await enumerator.MoveNextAsync())
+            {
+                yield return enumerator.Current;
+            }
         }
 
-        public Room Get(int id)
+        public Task<Room> GetAsync(int id)
         {
-            Room room = _context.Rooms.Find(id);
-
-            return room;
+            return _context.Rooms
+                    .Include(i => i.Bookings)
+                    .FirstOrDefaultAsync(i => i.Id == id);
         }
 
         public Room Add(Room room)
         {
-            room.Bookings = new List<Booking>();
-
             _context.Rooms.Add(room);
             _context.SaveChanges();
 

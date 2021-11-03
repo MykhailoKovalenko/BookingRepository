@@ -16,21 +16,24 @@ namespace BookingRooms.DataAccessLayer.Repository
         {
             _context = context;
         }
-        public IEnumerable<Booking> GetAllForPeriod(DateTime startDate, DateTime endDate)
+        public async IAsyncEnumerable<Booking> GetAllForPeriodAsync(DateTime startDate, DateTime endDate)
         {
-            var booking = _context.Bookings.Where(i => i.Start < endDate && startDate < i.End); 
+            var booking = _context.Bookings.Where(i => i.Start < endDate && startDate < i.End);
 
-            return booking;
-        }
-        public Booking Get(int id)
-        {
-            Booking booking = _context.Bookings.Find(id);
+            var enumerator = booking.AsAsyncEnumerable().GetAsyncEnumerator();
 
-            return booking;
+            while(await enumerator.MoveNextAsync())
+            {
+                yield return enumerator.Current;
+            }
         }
+
         public Task<Booking> GetAsync(int id)
         {
-            return _context.Bookings.Include(i => i.User).Include(i => i.Room).FirstOrDefaultAsync(i => i.Id == id);
+            return _context.Bookings
+                .Include(i => i.User)
+                .Include(i => i.Room)
+                .FirstOrDefaultAsync(i => i.Id == id);
         }
         public Booking Add(Booking booking)
         {
@@ -39,6 +42,7 @@ namespace BookingRooms.DataAccessLayer.Repository
 
             return booking;
         }
+
         public Booking Update(Booking booking)
         {
             Booking existingbooking = _context.Bookings.Find(booking.Id);
