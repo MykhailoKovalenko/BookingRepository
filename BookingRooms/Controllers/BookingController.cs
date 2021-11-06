@@ -45,6 +45,8 @@ namespace BookingRooms.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
+            //if(!_bookingService.Validate())
+
             //var freeRoomIds = _roomService.GetFree(booking.Start, booking.End).Select(i => i.Id);
             //if (!freeRoomIds.Contains(booking.RoomId))
             //    return UnprocessableEntity(new { error = "Sorry! The room is occupied at this time.", roomId = booking.RoomId });

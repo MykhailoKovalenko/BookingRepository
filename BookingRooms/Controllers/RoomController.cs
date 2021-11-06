@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using System.Threading.Tasks;
 using BookingRooms.Models;
 using BookingRooms.Services;
@@ -29,7 +30,7 @@ namespace BookingRooms.Controllers
 
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Room>))]
-        public IAsyncEnumerable<Room> GetAll() => _roomService.GetAllAsync();
+        public async Task<ActionResult> GetAll() => Ok(await _roomService.GetAllAsync().ToListAsync());
 
         [HttpGet("{id}")]
         [ProducesResponseType(200, Type = typeof(Room))]

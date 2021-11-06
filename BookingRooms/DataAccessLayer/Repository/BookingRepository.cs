@@ -16,21 +16,34 @@ namespace BookingRooms.DataAccessLayer.Repository
         {
             _context = context;
         }
-        public async IAsyncEnumerable<Booking> GetAllForPeriodAsync(DateTime startDate, DateTime endDate)
-        {
-            var booking = _context.Bookings.Where(i => i.Start < endDate && startDate < i.End);
+        //public Task<IEnumerable<Booking>> GetAllForPeriodAsync(DateTime startDate, DateTime endDate)
+        //{
 
-            var enumerator = booking.AsAsyncEnumerable().GetAsyncEnumerator();
-
-            while(await enumerator.MoveNextAsync())
+            public Task<List<Booking>> GetAllForPeriodAsync(DateTime startDate, DateTime endDate)
             {
-                yield return enumerator.Current;
-            }
-        }
+                var booking = _context.Bookings.AsQueryable().Where(i => i.Start < endDate && startDate < i.End);
 
-        public Task<Booking> GetAsync(int id)
+                return booking.ToListAsync();
+            }
+
+            //return Task.Run(() => {
+            //    var booking = _context.Bookings.Where(i => i.Start < endDate && startDate < i.End);
+            //    return booking.AsEnumerable();
+            //});
+
+
+
+            //var enumerator = booking.AsAsyncEnumerable().GetAsyncEnumerator();
+
+            //while(await enumerator.MoveNextAsync())
+            //{
+            //    yield return enumerator.Current;
+            //}
+        //}
+
+        public async Task<Booking> GetAsync(int id)
         {
-            return _context.Bookings
+            return await _context.Bookings
                 .Include(i => i.User)
                 .Include(i => i.Room)
                 .FirstOrDefaultAsync(i => i.Id == id);

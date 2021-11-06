@@ -34,12 +34,14 @@ namespace BookingRooms.Services
         public Room Delete(int id) => _roomRepository.Delete(id);
         public async IAsyncEnumerable<Room> GetFreeAsync(DateTime startDate, DateTime endDate)
         {
-            List<int> bookedRoomIds = new List<int>();
+            //List<int> bookedRoomIds = new List<int>();
 
-            await foreach (var booking in _bookingRepository.GetAllForPeriodAsync(startDate, endDate))
-            {
-                bookedRoomIds.Add(booking.RoomId);
-            }
+             var bookedRoomIds = (await _bookingRepository.GetAllForPeriod(startDate, endDate)).Select(i=> i.Id);
+
+            //await foreach (var booking in _bookingRepository.GetAllForPeriod(startDate, endDate))
+            //{
+            //    bookedRoomIds.Add(booking.RoomId);
+            //}
 
             await foreach (var room in _roomRepository.GetAllAsync())
             {

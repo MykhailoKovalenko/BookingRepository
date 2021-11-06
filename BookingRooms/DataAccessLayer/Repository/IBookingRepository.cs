@@ -8,7 +8,7 @@ namespace BookingRooms.DataAccessLayer.Repository
 {
     public interface IBookingRepository
     {
-        IAsyncEnumerable<Booking> GetAllForPeriodAsync(DateTime startDate, DateTime endDate);
+        Task<List<Booking>> GetAllForPeriodAsync(DateTime startDate, DateTime endDate);
         Task<Booking> GetAsync(int id);
         Booking Add(Booking booking);
         Booking Update(Booking booking);

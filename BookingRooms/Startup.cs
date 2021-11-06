@@ -18,6 +18,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using System.Text.Json.Serialization;
 using System.Text.Json;
+using BookingRooms.Models.Identity;
+using Microsoft.AspNetCore.Identity;
 
 namespace BookingRooms
 {
@@ -43,7 +45,13 @@ namespace BookingRooms
             });
 
             services.AddDbContext<BRoomsContext>(
-                    options => options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
+                    options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDbContext<AppIdentityContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
+
+            services.AddIdentity<AppUser, IdentityRole>()
+                    .AddEntityFrameworkStores<AppIdentityContext>();
 
             services.AddScoped<IRoomService, RoomService>();
             services.AddScoped<IRoomRepository, RoomRepository>();
@@ -65,6 +73,7 @@ namespace BookingRooms
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

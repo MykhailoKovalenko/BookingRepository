@@ -16,7 +16,8 @@ namespace BookingRooms.Services
             _bookingRepository = bookingRepository;
         }
 
-        public IAsyncEnumerable<Booking> GetAllForPeriodAsync(DateTime startDate, DateTime endDate) => _bookingRepository.GetAllForPeriodAsync(startDate, endDate);
+        public Task<List<Booking>> GetAllForPeriod(DateTime startDate, DateTime endDate) 
+                                => _bookingRepository.GetAllForPeriod(startDate, endDate);
         public Booking Add(Booking booking) => _bookingRepository.Add(booking);
         public Booking Update(Booking booking) => _bookingRepository.Update(booking);
         public Task<Booking> GetAsync(int id) => _bookingRepository.GetAsync(id);
