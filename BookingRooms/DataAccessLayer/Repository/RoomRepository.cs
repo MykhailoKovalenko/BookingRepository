@@ -17,54 +17,52 @@ namespace BookingRooms.DataAccessLayer.Repository
             _context = context;
         }
 
-        public async IAsyncEnumerable<Room> GetAllAsync()
+        public async Task<IEnumerable<Room>> GetAllAsync()
         {
-            var enumerator = _context.Rooms.AsAsyncEnumerable().GetAsyncEnumerator();
-
-            while (await enumerator.MoveNextAsync())
-            {
-                yield return enumerator.Current;
-            }
+            return await _context.Rooms
+                        .AsQueryable()
+                        .ToListAsync();
         }
 
-        public Task<Room> GetAsync(int id)
+        public async Task<Room> GetAsync(int id)
         {
-            return _context.Rooms
+            return await _context.Rooms
                     .Include(i => i.Bookings)
                     .FirstOrDefaultAsync(i => i.Id == id);
         }
 
-        public Room Add(Room room)
+        public async Task<Room> AddAsync(Room room)
         {
             _context.Rooms.Add(room);
-            _context.SaveChanges();
+
+            await SaveChangesAsync();
 
             return room;
         }
 
-        public Room Update(Room room)
+        public async Task<bool> UpdateAsync(Room room)
         {
-            Room existingRoom = _context.Rooms.Find(room.Id);
+            Room existingRoom = await GetAsync(room.Id);
 
             existingRoom.Name = room.Name;
             existingRoom.Places = room.Places;
             existingRoom.IsProjector = room.IsProjector;
 
-            //context.Update(room);
-
-            _context.SaveChanges();
-
-            return existingRoom;
+            return await SaveChangesAsync();
         }
 
-        public Room Delete(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            Room existingRoom = _context.Rooms.Find(id);
+            Room room = await GetAsync(id);
 
-            _context.Rooms.Remove(existingRoom);
-            _context.SaveChanges();
+            _context.Rooms.Remove(room);
 
-            return existingRoom;
+            return await SaveChangesAsync();
+        }
+
+        public async Task<bool> SaveChangesAsync()
+        {
+            return (await _context.SaveChangesAsync() > 0);
         }
     }
 }

@@ -10,36 +10,23 @@ namespace BookingRooms.DataAccessLayer.Repository
 {
     public class BookingRepository : IBookingRepository
     {
-
         private readonly BRoomsContext _context;
         public BookingRepository(BRoomsContext context)
         {
             _context = context;
         }
-        //public Task<IEnumerable<Booking>> GetAllForPeriodAsync(DateTime startDate, DateTime endDate)
-        //{
 
-            public Task<List<Booking>> GetAllForPeriodAsync(DateTime startDate, DateTime endDate)
-            {
-                var booking = _context.Bookings.AsQueryable().Where(i => i.Start < endDate && startDate < i.End);
+        public async Task<IEnumerable<Booking>> GetAllForPeriodAsync(DateTime startDate, DateTime endDate)
+        {
+            var bookings = await _context.Bookings
+                                .Include(i => i.User)
+                                .Include(i => i.Room)
+                                .AsQueryable()
+                                .Where(i => i.Start < endDate && startDate < i.End)
+                                .ToListAsync();
 
-                return booking.ToListAsync();
-            }
-
-            //return Task.Run(() => {
-            //    var booking = _context.Bookings.Where(i => i.Start < endDate && startDate < i.End);
-            //    return booking.AsEnumerable();
-            //});
-
-
-
-            //var enumerator = booking.AsAsyncEnumerable().GetAsyncEnumerator();
-
-            //while(await enumerator.MoveNextAsync())
-            //{
-            //    yield return enumerator.Current;
-            //}
-        //}
+            return bookings;
+        }
 
         public async Task<Booking> GetAsync(int id)
         {
@@ -48,26 +35,40 @@ namespace BookingRooms.DataAccessLayer.Repository
                 .Include(i => i.Room)
                 .FirstOrDefaultAsync(i => i.Id == id);
         }
-        public Booking Add(Booking booking)
+
+        public async Task<Booking> AddAsync(Booking booking)
         {
             _context.Bookings.Add(booking);
-            _context.SaveChanges();
+
+            await SaveChangesAsync();
 
             return booking;
         }
 
-        public Booking Update(Booking booking)
+        public async Task<bool> UpdateAsync(Booking booking)
         {
-            Booking existingbooking = _context.Bookings.Find(booking.Id);
-
+            Booking existingbooking = await GetAsync(booking.Id);
+            
             existingbooking.Start = booking.Start;
             existingbooking.End = booking.End;
             existingbooking.RoomId = booking.RoomId;
-            existingbooking.UserId = booking.UserId; 
+            existingbooking.UserId = booking.UserId;
 
-            _context.SaveChanges();
+            return await SaveChangesAsync();     
+        }
 
-            return existingbooking;
+        public async Task<bool> DeleteAsync(int id)
+        {
+            Booking booking = await GetAsync(id);
+
+            _context.Bookings.Remove(booking);
+
+            return await SaveChangesAsync();
+        }
+
+        public async Task<bool> SaveChangesAsync()
+        {
+            return (await _context.SaveChangesAsync() > 0);
         }
     }
 }

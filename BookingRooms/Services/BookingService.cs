@@ -10,17 +10,23 @@ namespace BookingRooms.Services
 {
     public class BookingService : IBookingService
     {
-        private IBookingRepository _bookingRepository;
+        private readonly IBookingRepository _bookingRepository;
         public BookingService(IBookingRepository bookingRepository)
         {
             _bookingRepository = bookingRepository;
         }
 
-        public Task<List<Booking>> GetAllForPeriod(DateTime startDate, DateTime endDate) 
-                                => _bookingRepository.GetAllForPeriod(startDate, endDate);
-        public Booking Add(Booking booking) => _bookingRepository.Add(booking);
-        public Booking Update(Booking booking) => _bookingRepository.Update(booking);
-        public Task<Booking> GetAsync(int id) => _bookingRepository.GetAsync(id);
+        public async Task<IEnumerable<Booking>> GetAllForPeriodAsync(DateTime startDate, DateTime endDate)
+        {
+            return await _bookingRepository.GetAllForPeriodAsync(startDate, endDate);
+        }
 
+        public async Task<Booking> GetAsync(int id) => await _bookingRepository.GetAsync(id);
+
+        public async Task<Booking> AddAsync(Booking booking) => await _bookingRepository.AddAsync(booking);
+
+        public async Task<bool> UpdateAsync(Booking booking) => await _bookingRepository.UpdateAsync(booking);
+
+        public async Task<bool> DeleteAsync(int id) => await _bookingRepository.DeleteAsync(id);
     }
 }

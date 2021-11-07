@@ -12,42 +12,27 @@ namespace BookingRooms.Services
     public class RoomService : IRoomService
     {
 
-        private IRoomRepository _roomRepository;
-        private IBookingRepository _bookingRepository;
+        private readonly IRoomRepository _roomRepository;
+        private readonly IBookingRepository _bookingRepository;
         public RoomService(IRoomRepository roomRepository, IBookingRepository bookingRepository)
         {
             _roomRepository = roomRepository;
             _bookingRepository = bookingRepository;
         }
 
-        public async IAsyncEnumerable<Room> GetAllAsync()
+        public async Task<IEnumerable<Room>> GetAllAsync() => await _roomRepository.GetAllAsync(); 
+        public async Task<Room> GetAsync(int id) => await _roomRepository.GetAsync(id);
+        public async Task<IEnumerable<Room>> GetFreeAsync(DateTime startDate, DateTime endDate)
         {
-            await foreach (var room in _roomRepository.GetAllAsync())
-            {
-                yield return room;
-            }
-        } 
+            var bookedRoomIds = (await _bookingRepository.GetAllForPeriodAsync(startDate, endDate)).Select(i => i.RoomId);
 
-        public Task<Room> GetAsync(int id) => _roomRepository.GetAsync(id);
-        public Room Add(Room room) => _roomRepository.Add(room);
-        public Room Update(Room room) => _roomRepository.Update(room);
-        public Room Delete(int id) => _roomRepository.Delete(id);
-        public async IAsyncEnumerable<Room> GetFreeAsync(DateTime startDate, DateTime endDate)
-        {
-            //List<int> bookedRoomIds = new List<int>();
+            var freeRooms = (await _roomRepository.GetAllAsync()).Where(i => !bookedRoomIds.Contains(i.Id));
 
-             var bookedRoomIds = (await _bookingRepository.GetAllForPeriod(startDate, endDate)).Select(i=> i.Id);
-
-            //await foreach (var booking in _bookingRepository.GetAllForPeriod(startDate, endDate))
-            //{
-            //    bookedRoomIds.Add(booking.RoomId);
-            //}
-
-            await foreach (var room in _roomRepository.GetAllAsync())
-            {
-                if (!bookedRoomIds.Contains(room.Id))
-                    yield return room;    
-            }
+            return freeRooms;
         }
+        public async Task<Room> AddAsync(Room room) => await _roomRepository.AddAsync(room);
+        public async Task<bool> UpdateAsync(Room room) => await _roomRepository.UpdateAsync(room);
+        public async Task<bool> DeleteAsync(int id) => await _roomRepository.DeleteAsync(id);
+        
     }
 }

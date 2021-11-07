@@ -20,6 +20,7 @@ using System.Text.Json.Serialization;
 using System.Text.Json;
 using BookingRooms.Models.Identity;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Protocols;
 
 namespace BookingRooms
 {

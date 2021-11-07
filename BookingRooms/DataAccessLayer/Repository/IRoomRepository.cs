@@ -8,10 +8,10 @@ namespace BookingRooms.DataAccessLayer.Repository
 {
     public interface IRoomRepository
     {
-        IAsyncEnumerable<Room> GetAllAsync();
+        Task<IEnumerable<Room>> GetAllAsync();
         Task<Room> GetAsync(int id);
-        Room Add(Room room);
-        Room Update(Room room);
-        Room Delete(int id);
+        Task<Room> AddAsync(Room room);
+        Task<bool> UpdateAsync(Room room);
+        Task<bool> DeleteAsync(int id);
     }
 }

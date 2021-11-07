@@ -8,12 +8,11 @@ namespace BookingRooms.Interfaces
 {
     public interface IRoomService
     {
-        IAsyncEnumerable<Room> GetAllAsync();
+        Task<IEnumerable<Room>> GetAllAsync();
         Task<Room> GetAsync(int id);
-        Room Add(Room room);
-        Room Update(Room room);
-        Room Delete(int id);
-        IAsyncEnumerable<Room> GetFreeAsync(DateTime startDate, DateTime endDate);
-
+        Task<IEnumerable<Room>> GetFreeAsync(DateTime startDate, DateTime endDate);
+        Task<Room> AddAsync(Room room);
+        Task<bool> UpdateAsync(Room room);
+        Task<bool> DeleteAsync(int id);
     }
 }

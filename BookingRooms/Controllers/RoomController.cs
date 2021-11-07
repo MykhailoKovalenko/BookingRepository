@@ -14,13 +14,15 @@ namespace BookingRooms.Controllers
     [Route("[controller]")]
     public class RoomController : ControllerBase
     {
-        private IRoomService _roomService;
+        private readonly IRoomService _roomService;
         public RoomController(IRoomService roomService)
         {
             _roomService = roomService;
         }
 
-        [HttpGet("Index")]
+    #region index
+
+        [HttpGet("index")]
         public IActionResult Index()
         {
             var controller = RouteData.Values["controller"].ToString();
@@ -28,31 +30,46 @@ namespace BookingRooms.Controllers
             return Content($"controller: {controller} | action: {action}");
         }
 
+    #endregion
+
+    #region getAll
+
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Room>))]
-        public async Task<ActionResult> GetAll() => Ok(await _roomService.GetAllAsync().ToListAsync());
+        public async Task<ActionResult<IEnumerable<Room>>> GetAll() => Ok(await _roomService.GetAllAsync());
 
-        [HttpGet("{id}")]
+    #endregion
+
+    #region get
+
+        [HttpGet("{id}", Name = nameof(GetRoom))]
         [ProducesResponseType(200, Type = typeof(Room))]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<Room>> Get(int id) 
+        public async Task<ActionResult<Room>> GetRoom(int id) 
         {
             var room = await _roomService.GetAsync(id);
 
             if (room == null)
                 return NotFound(); 
+
             return Ok(room);
         }
 
+    #endregion
 
-        [HttpGet("GetFree")]
+    #region getFree
+
+        [HttpGet("free")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Room>))]
-        public IAsyncEnumerable<Room> GetFree([FromQuery] DateTime start, [FromQuery] DateTime end) => _roomService.GetFreeAsync(start, end);
+        public async Task<ActionResult<IEnumerable<Room>>> GetFree([FromQuery] DateTime start, [FromQuery] DateTime end) => Ok(await _roomService.GetFreeAsync(start, end));
 
+    #endregion
+
+    #region create
         [HttpPost]
         [ProducesResponseType(201, Type = typeof(Room))]
         [ProducesResponseType(400)]
-        public IActionResult Create([FromBody] Room room)
+        public async Task<ActionResult<Room>> Create([FromBody] Room room)
         {
             if (room == null)
                 return BadRequest();
@@ -60,15 +77,20 @@ namespace BookingRooms.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            _roomService.Add(room);
+            await _roomService.AddAsync(room);
+
             return CreatedAtAction(nameof(Create), new { id = room.Id }, room);
         }
+
+    #endregion
+
+    #region update
 
         [HttpPut("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public IActionResult Update(int id, [FromBody] Room room)
+        public async Task<ActionResult> Update(int id, [FromBody] Room room)
         {
             if (room == null || id != room.Id)
                 return BadRequest();
@@ -76,28 +98,35 @@ namespace BookingRooms.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var existingRoom = _roomService.GetAsync(id);
+            var existingRoom = await _roomService.GetAsync(id);
             if (existingRoom == null)
                 return NotFound();
 
-            _roomService.Update(room);
+            var result = await _roomService.UpdateAsync(room);
 
             return NoContent();
         }
+
+    #endregion
+
+    #region delete
 
         [HttpDelete("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            var room = _roomService.GetAsync(id);
+            var room = await _roomService.GetAsync(id);
 
             if (room == null)
                 return NotFound();
 
-            _roomService.Delete(id);
+            var result = await _roomService.DeleteAsync(id);
 
             return NoContent();
         }
+
+    #endregion
+
     }
 }

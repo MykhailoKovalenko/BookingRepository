@@ -12,18 +12,31 @@ namespace BookingRooms.Controllers
     [Route("[controller]")]
     public class BookingController : ControllerBase
     {
-        private IBookingService _bookingService;
-        private IRoomService _roomService;
+        private readonly IBookingService _bookingService;
+        private readonly IRoomService _roomService;
         public BookingController(IBookingService bookingService, IRoomService roomService)
         {
             _bookingService = bookingService;
             _roomService = roomService;
         }
 
-        [HttpGet("{id}")]
+    #region getForPeriod
+
+        [HttpGet("forPeriod")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Booking>))]
+        public async Task<ActionResult<IEnumerable<Booking>>> GetAllForPeriod([FromQuery] DateTime start, [FromQuery] DateTime end)
+        {
+            return Ok(await _bookingService.GetAllForPeriodAsync(start, end));
+        }
+        
+    #endregion
+
+    #region get
+
+        [HttpGet("{id}", Name = nameof(GetBooking))]
         [ProducesResponseType(200, Type = typeof(Booking))]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<Booking>> Get(int id)
+        public async Task<ActionResult<Booking>> GetBooking(int id)
         {
             var booking = await _bookingService.GetAsync(id);
 
@@ -33,11 +46,15 @@ namespace BookingRooms.Controllers
             return Ok(booking);
         }
 
+        #endregion
+
+    #region create
+
         [HttpPost]
         [ProducesResponseType(201, Type = typeof(Booking))]
         [ProducesResponseType(400)]
         [ProducesResponseType(422)]
-        public IActionResult Create([FromBody] Booking booking)
+        public async Task<ActionResult<Booking>> Create([FromBody] Booking booking)
         {
             if (booking == null)
                 return BadRequest();
@@ -51,15 +68,19 @@ namespace BookingRooms.Controllers
             //if (!freeRoomIds.Contains(booking.RoomId))
             //    return UnprocessableEntity(new { error = "Sorry! The room is occupied at this time.", roomId = booking.RoomId });
 
-            _bookingService.Add(booking);
+            await _bookingService.AddAsync(booking);
             return CreatedAtAction(nameof(Create), new { id = booking.Id }, booking);
         }
+
+    #endregion
+
+    #region update
 
         [HttpPut("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public IActionResult Update(int id, [FromBody] Booking booking)
+        public async Task<ActionResult> Update(int id, [FromBody] Booking booking)
         {
             if (booking == null || id != booking.Id)
                 return BadRequest();
@@ -67,14 +88,37 @@ namespace BookingRooms.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var existingBooking = _bookingService.GetAsync(id);
+            var existingBooking = await _bookingService.GetAsync(id);
             if (existingBooking == null)
                 return NotFound();
 
-            _bookingService.Update(booking);
+            var result = await _bookingService.UpdateAsync(booking);
+
+            //if(!result)
+            //    return 
 
             return NoContent();
         }
 
+        #endregion
+
+    #region delete
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var booking = await _bookingService.GetAsync(id);
+
+            if (booking == null)
+                return NotFound();
+
+            var result = await _bookingService.DeleteAsync(id);
+
+            return NoContent();
+        }
+
+    #endregion
     }
 }
