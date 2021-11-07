@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using BookingRooms.Models;
 using BookingRooms.Services;
 using BookingRooms.Interfaces;
+using AutoMapper;
+using BookingRooms.Models.DTO;
 
 namespace BookingRooms.Controllers 
 {
@@ -15,9 +17,11 @@ namespace BookingRooms.Controllers
     public class RoomController : ControllerBase
     {
         private readonly IRoomService _roomService;
-        public RoomController(IRoomService roomService)
+        private readonly IMapper _mapper;
+        public RoomController(IRoomService roomService, IMapper mapper)
         {
             _roomService = roomService;
+            _mapper = mapper;
         }
 
     #region index
@@ -35,42 +39,48 @@ namespace BookingRooms.Controllers
     #region getAll
 
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Room>))]
-        public async Task<ActionResult<IEnumerable<Room>>> GetAll() => Ok(await _roomService.GetAllAsync());
+        [ProducesResponseType(200, Type = typeof(IEnumerable<RoomOutputDTO>))]
+        public async Task<ActionResult<IEnumerable<RoomOutputDTO>>> GetAll() 
+                            => Ok(_mapper.Map<IEnumerable<RoomOutputDTO>>(await _roomService.GetAllAsync()));
 
     #endregion
 
     #region get
 
         [HttpGet("{id}", Name = nameof(GetRoom))]
-        [ProducesResponseType(200, Type = typeof(Room))]
+        [ProducesResponseType(200, Type = typeof(RoomOutputDTO))]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<Room>> GetRoom(int id) 
+        public async Task<ActionResult<RoomOutputDTO>> GetRoom(int id) 
         {
             var room = await _roomService.GetAsync(id);
 
             if (room == null)
                 return NotFound(); 
 
-            return Ok(room);
+            return Ok(_mapper.Map<RoomOutputDTO>(room));
         }
 
-    #endregion
+        #endregion
 
     #region getFree
 
         [HttpGet("free")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Room>))]
-        public async Task<ActionResult<IEnumerable<Room>>> GetFree([FromQuery] DateTime start, [FromQuery] DateTime end) => Ok(await _roomService.GetFreeAsync(start, end));
+        [ProducesResponseType(200, Type = typeof(IEnumerable<RoomOutputDTO>))]
+        public async Task<ActionResult<IEnumerable<RoomOutputDTO>>> GetFree([FromQuery] DateTime start, [FromQuery] DateTime end)
+        {
+            return Ok(_mapper.Map<RoomOutputDTO>(await _roomService.GetFreeAsync(start, end)));
+        }
 
     #endregion
 
     #region create
         [HttpPost]
-        [ProducesResponseType(201, Type = typeof(Room))]
+        [ProducesResponseType(201, Type = typeof(RoomOutputDTO))]
         [ProducesResponseType(400)]
-        public async Task<ActionResult<Room>> Create([FromBody] Room room)
+        public async Task<ActionResult<RoomOutputDTO>> Create([FromBody] RoomInputDTO roomInputDTO)
         {
+            Room room = _mapper.Map<Room>(roomInputDTO);
+
             if (room == null)
                 return BadRequest();
 
@@ -79,7 +89,9 @@ namespace BookingRooms.Controllers
 
             await _roomService.AddAsync(room);
 
-            return CreatedAtAction(nameof(Create), new { id = room.Id }, room);
+            RoomOutputDTO roomOutputDTO = _mapper.Map<RoomOutputDTO>(room);
+
+            return CreatedAtAction(nameof(Create), new { id = roomOutputDTO.Id }, roomOutputDTO);
         }
 
     #endregion
@@ -90,8 +102,10 @@ namespace BookingRooms.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult> Update(int id, [FromBody] Room room)
+        public async Task<ActionResult> Update(int id, [FromBody] RoomInputDTO roomInputDTO)
         {
+            Room room = _mapper.Map<Room>(roomInputDTO);
+
             if (room == null || id != room.Id)
                 return BadRequest();
 
