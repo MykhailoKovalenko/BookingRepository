@@ -60,6 +60,8 @@ namespace BookingRooms
             services.AddScoped<IRoomRepository, RoomRepository>();
             services.AddScoped<IBookingService, BookingService>();
             services.AddScoped<IBookingRepository, BookingRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
 
             services.AddSwaggerGen();
         }

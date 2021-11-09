@@ -62,7 +62,7 @@ namespace BookingRooms.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            //if(!_bookingService.Validate())
+            //if(!_bookingService.Validate(out string message))
 
             //var freeRoomIds = _roomService.GetFree(booking.Start, booking.End).Select(i => i.Id);
             //if (!freeRoomIds.Contains(booking.RoomId))
