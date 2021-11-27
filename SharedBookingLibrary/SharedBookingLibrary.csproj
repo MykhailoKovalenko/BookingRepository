@@ -45,11 +45,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTO\BookingInputDTO.cs" />
+    <Compile Include="DTO\BookingOutputDTO.cs" />
     <Compile Include="DTO\RoomInputDTO.cs" />
     <Compile Include="DTO\RoomOutputDTO.cs" />
     <Compile Include="DTO\UserInputDTO.cs" />
     <Compile Include="DTO\UserOutputDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validation\MaxBookingHoursAttribute.cs" />
+    <Compile Include="Validation\MinBookingMinutesAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

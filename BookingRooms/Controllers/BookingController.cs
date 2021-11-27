@@ -1,6 +1,8 @@
-﻿using BookingRooms.Interfaces;
+﻿using AutoMapper;
+using BookingRooms.Interfaces;
 using BookingRooms.Models;
 using Microsoft.AspNetCore.Mvc;
+using SharedBookingLibrary.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,19 +16,21 @@ namespace BookingRooms.Controllers
     {
         private readonly IBookingService _bookingService;
         private readonly IRoomService _roomService;
-        public BookingController(IBookingService bookingService, IRoomService roomService)
+        private readonly IMapper _mapper;
+        public BookingController(IBookingService bookingService, IRoomService roomService, IMapper mapper)
         {
             _bookingService = bookingService;
             _roomService = roomService;
+            _mapper = mapper;
         }
 
     #region getForPeriod
 
         [HttpGet("forPeriod")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Booking>))]
-        public async Task<ActionResult<IEnumerable<Booking>>> GetAllForPeriod([FromQuery] DateTime start, [FromQuery] DateTime end)
+        [ProducesResponseType(200, Type = typeof(IEnumerable<BookingOutputDTO>))]
+        public async Task<ActionResult<IEnumerable<BookingOutputDTO>>> GetAllForPeriod([FromQuery] DateTime start, [FromQuery] DateTime end)
         {
-            return Ok(await _bookingService.GetAllForPeriodAsync(start, end));
+            return Ok(_mapper.Map<IEnumerable<BookingOutputDTO>>(await _bookingService.GetAllForPeriodAsync(start, end)));
         }
         
     #endregion
@@ -34,16 +38,16 @@ namespace BookingRooms.Controllers
     #region get
 
         [HttpGet("{id}", Name = nameof(GetBooking))]
-        [ProducesResponseType(200, Type = typeof(Booking))]
+        [ProducesResponseType(200, Type = typeof(BookingOutputDTO))]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<Booking>> GetBooking(int id)
+        public async Task<ActionResult<BookingOutputDTO>> GetBooking(int id)
         {
             var booking = await _bookingService.GetAsync(id);
 
             if (booking == null)
                 return NotFound();
 
-            return Ok(booking);
+            return Ok(_mapper.Map<BookingOutputDTO>(booking));
         }
 
         #endregion
@@ -51,11 +55,13 @@ namespace BookingRooms.Controllers
     #region create
 
         [HttpPost]
-        [ProducesResponseType(201, Type = typeof(Booking))]
+        [ProducesResponseType(201, Type = typeof(BookingOutputDTO))]
         [ProducesResponseType(400)]
         [ProducesResponseType(422)]
-        public async Task<ActionResult<Booking>> Create([FromBody] Booking booking)
+        public async Task<ActionResult<BookingOutputDTO>> Create([FromBody] BookingInputDTO bookingInputDTO)
         {
+            Booking booking = _mapper.Map<Booking>(bookingInputDTO);
+
             if (booking == null)
                 return BadRequest();
 
@@ -69,7 +75,10 @@ namespace BookingRooms.Controllers
             //    return UnprocessableEntity(new { error = "Sorry! The room is occupied at this time.", roomId = booking.RoomId });
 
             await _bookingService.AddAsync(booking);
-            return CreatedAtAction(nameof(Create), new { id = booking.Id }, booking);
+
+            BookingOutputDTO bookingOutputDTO = _mapper.Map<BookingOutputDTO>(booking);
+
+            return CreatedAtAction(nameof(Create), new { id = bookingOutputDTO.Id }, bookingOutputDTO);
         }
 
     #endregion
@@ -80,8 +89,10 @@ namespace BookingRooms.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult> Update(int id, [FromBody] Booking booking)
+        public async Task<ActionResult> Update(int id, [FromBody] BookingInputDTO bookingInputDTO)
         {
+            Booking booking = _mapper.Map<Booking>(bookingInputDTO);
+
             if (booking == null || id != booking.Id)
                 return BadRequest();
 

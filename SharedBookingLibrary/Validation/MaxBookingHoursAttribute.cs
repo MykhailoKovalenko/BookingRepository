@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SharedBookingLibrary.DTO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
@@ -21,15 +22,15 @@ namespace BookingRooms.Models.Validation
                 ErrorMessage = "Invalid bookind data. Check your data and try again!";
                 return false;
             }
-            
-            Booking booking = value as Booking;
 
-            if(booking == null)
+            BookingInputDTO bookingInputDTO = value as BookingInputDTO;
+
+            if(bookingInputDTO == null)
             {
                 throw new ValidationException("Incorrect using of attribute!");
             }
 
-            TimeSpan bookingTime = booking.End.Subtract(booking.Start);
+            TimeSpan bookingTime = bookingInputDTO.End.Subtract(bookingInputDTO.Start);
             TimeSpan hours = TimeSpan.FromHours(_maxBookingHours);
 
             if (bookingTime.CompareTo(hours) == 1)

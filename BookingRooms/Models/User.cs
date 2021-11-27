@@ -9,8 +9,6 @@ namespace BookingRooms.Models
     public class User
     {
         public int Id { get; set; }
-
-        [Required(ErrorMessage = "Name is not specified")]
         public string Name { get; set; }
         public virtual ICollection<Booking> Bookings { get; set; }
     }
