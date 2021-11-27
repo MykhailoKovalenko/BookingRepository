@@ -8,7 +8,7 @@ using BookingRooms.Models;
 using BookingRooms.Services;
 using BookingRooms.Interfaces;
 using AutoMapper;
-using BookingRooms.Models.DTO;
+using SharedBookingLibrary.DTO;
 
 namespace BookingRooms.Controllers 
 {

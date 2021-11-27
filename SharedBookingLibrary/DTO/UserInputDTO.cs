@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BookingRooms.Models.DTO
+namespace SharedBookingLibrary.DTO
 {
     public class UserInputDTO
     {

@@ -36,14 +36,7 @@ namespace BookingRooms
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers(options =>
-            {
-                options.OutputFormatters.RemoveType<SystemTextJsonOutputFormatter>();
-                options.OutputFormatters.Add(new SystemTextJsonOutputFormatter(new JsonSerializerOptions(JsonSerializerDefaults.Web)
-                {
-                    ReferenceHandler = ReferenceHandler.Preserve,
-                }));
-            });
+            services.AddControllers();
 
             services.AddDbContext<BRoomsContext>(
                     options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -63,6 +56,13 @@ namespace BookingRooms
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
 
+            services.AddCors(o => o.AddPolicy("MVCClient", builder =>
+            {
+                builder.WithOrigins("https://localhost:44329", "http://localhost:20074")
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
+
             services.AddSwaggerGen();
         }
 
@@ -75,6 +75,8 @@ namespace BookingRooms
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors("MVCClient");
 
             app.UseRouting();
 
@@ -93,7 +95,7 @@ namespace BookingRooms
             app.UseSwagger();
             app.UseSwaggerUI();
 
-
+            
             
         }
     }

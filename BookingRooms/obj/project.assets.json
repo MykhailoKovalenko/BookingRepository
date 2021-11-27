@@ -1786,6 +1786,15 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XmlSerializer.dll": {}
         }
+      },
+      "SharedBookingLibrary/1.0.0": {
+        "type": "project",
+        "compile": {
+          "bin/placeholder/SharedBookingLibrary.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SharedBookingLibrary.dll": {}
+        }
       }
     }
   },
@@ -6511,6 +6520,11 @@
         "system.xml.xmlserializer.4.3.0.nupkg.sha512",
         "system.xml.xmlserializer.nuspec"
       ]
+    },
+    "SharedBookingLibrary/1.0.0": {
+      "type": "project",
+      "path": "../SharedBookingLibrary/SharedBookingLibrary.csproj",
+      "msbuildProject": "../SharedBookingLibrary/SharedBookingLibrary.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -6521,6 +6535,7 @@
       "Microsoft.EntityFrameworkCore >= 5.0.10",
       "Microsoft.EntityFrameworkCore.SqlServer >= 5.0.10",
       "Microsoft.EntityFrameworkCore.Tools >= 5.0.10",
+      "SharedBookingLibrary >= 1.0.0",
       "Swashbuckle.AspNetCore >= 6.2.2",
       "System.Linq.Async >= 5.0.0",
       "System.Text.Json >= 5.0.2"
@@ -6557,7 +6572,11 @@
       "frameworks": {
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\fires\\source\\repos\\BookingRepository\\SharedBookingLibrary\\SharedBookingLibrary.csproj": {
+              "projectPath": "C:\\Users\\fires\\source\\repos\\BookingRepository\\SharedBookingLibrary\\SharedBookingLibrary.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

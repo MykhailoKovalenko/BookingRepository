@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using BookingRooms.Interfaces;
 using BookingRooms.Models;
-using BookingRooms.Models.DTO;
+using SharedBookingLibrary.DTO;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

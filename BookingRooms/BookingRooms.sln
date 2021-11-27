@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingRooms", "BookingRooms.csproj", "{A1B111EC-275E-41B5-8B8C-C8A0F941F368}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookingRooms", "BookingRooms.csproj", "{A1B111EC-275E-41B5-8B8C-C8A0F941F368}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookingClient", "..\BookingClient\BookingClient.csproj", "{C199A0D7-05AE-4849-AA59-837A3D55F9DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedBookingLibrary", "..\SharedBookingLibrary\SharedBookingLibrary.csproj", "{0167A3CB-D8CD-4FB7-AF7F-98601AA1FA66}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingBlazorClient", "..\BookingBlazorClient\BookingBlazorClient.csproj", "{17229496-3A1E-45FF-88B5-123AC577D0E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{A1B111EC-275E-41B5-8B8C-C8A0F941F368}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1B111EC-275E-41B5-8B8C-C8A0F941F368}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1B111EC-275E-41B5-8B8C-C8A0F941F368}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C199A0D7-05AE-4849-AA59-837A3D55F9DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C199A0D7-05AE-4849-AA59-837A3D55F9DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C199A0D7-05AE-4849-AA59-837A3D55F9DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C199A0D7-05AE-4849-AA59-837A3D55F9DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0167A3CB-D8CD-4FB7-AF7F-98601AA1FA66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0167A3CB-D8CD-4FB7-AF7F-98601AA1FA66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0167A3CB-D8CD-4FB7-AF7F-98601AA1FA66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0167A3CB-D8CD-4FB7-AF7F-98601AA1FA66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17229496-3A1E-45FF-88B5-123AC577D0E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17229496-3A1E-45FF-88B5-123AC577D0E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17229496-3A1E-45FF-88B5-123AC577D0E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17229496-3A1E-45FF-88B5-123AC577D0E4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

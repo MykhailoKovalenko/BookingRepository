@@ -31,7 +31,11 @@
         "frameworks": {
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\fires\\source\\repos\\BookingRepository\\SharedBookingLibrary\\SharedBookingLibrary.csproj": {
+                "projectPath": "C:\\Users\\fires\\source\\repos\\BookingRepository\\SharedBookingLibrary\\SharedBookingLibrary.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -103,6 +107,16 @@
           },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.401\\RuntimeIdentifierGraph.json"
         }
+      }
+    },
+    "C:\\Users\\fires\\source\\repos\\BookingRepository\\SharedBookingLibrary\\SharedBookingLibrary.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Users\\fires\\source\\repos\\BookingRepository\\SharedBookingLibrary\\SharedBookingLibrary.csproj",
+        "projectName": "SharedBookingLibrary",
+        "projectPath": "C:\\Users\\fires\\source\\repos\\BookingRepository\\SharedBookingLibrary\\SharedBookingLibrary.csproj"
+      },
+      "frameworks": {
+        "net472": {}
       }
     }
   }

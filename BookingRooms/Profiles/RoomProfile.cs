@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using BookingRooms.Models;
-using BookingRooms.Models.DTO;
+using SharedBookingLibrary.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
