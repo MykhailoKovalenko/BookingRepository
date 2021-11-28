@@ -26,17 +26,13 @@ namespace BookingRooms.Models.Validation
             BookingInputDTO bookingInputDTO = value as BookingInputDTO;
 
             if(bookingInputDTO == null)
-            {
                 throw new ValidationException("Incorrect using of attribute!");
-            }
 
             TimeSpan bookingTime = bookingInputDTO.End.Subtract(bookingInputDTO.Start);
             TimeSpan hours = TimeSpan.FromHours(_maxBookingHours);
 
-            if (bookingTime.CompareTo(hours) == 1)
-            {     
+            if (bookingTime.CompareTo(hours) == 1) 
                 return false;
-            }
 
             return true;
         }

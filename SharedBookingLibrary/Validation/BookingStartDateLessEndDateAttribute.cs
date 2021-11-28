@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace SharedBookingLibrary.Validation
 {
-    public class MinBookingMinutesAttribute : ValidationAttribute
+    class BookingStartDateLessEndDateAttribute : ValidationAttribute
     {
-        int _minBookingMinutes;
-        public MinBookingMinutesAttribute(int minBookingMinutes)
-        {
-            _minBookingMinutes = minBookingMinutes;
-        }
+        //int _maxBookingHours;
+        //public BookingStartDateLessEndDateAttribute(int maxBookingHours)
+        //{
+        //    _maxBookingHours = maxBookingHours;
+        //}
         public override bool IsValid(object value)
         {
             if (value == null)
@@ -28,19 +28,16 @@ namespace SharedBookingLibrary.Validation
 
             if (bookingInputDTO == null)
                 throw new ValidationException("Incorrect using of attribute!");
-            
-            TimeSpan bookingTime = bookingInputDTO.End.Subtract(bookingInputDTO.Start);
-            TimeSpan minutes = TimeSpan.FromMinutes(_minBookingMinutes);
 
-            if (bookingTime.CompareTo(minutes) == -1)
+            if (bookingInputDTO.Start >= bookingInputDTO.End)
                 return false;
-            
+
             return true;
         }
 
-        public override string FormatErrorMessage(string name)
-        {
-            return String.Format(CultureInfo.CurrentCulture, ErrorMessageString, _minBookingMinutes);
-        }
+        //public override string FormatErrorMessage(string name)
+        //{
+        //    return String.Format(CultureInfo.CurrentCulture, ErrorMessageString, _maxBookingHours);
+        //}
     }
 }

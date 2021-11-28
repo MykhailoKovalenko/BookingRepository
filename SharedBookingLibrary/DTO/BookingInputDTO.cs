@@ -9,8 +9,9 @@ using System.Threading.Tasks;
 
 namespace SharedBookingLibrary.DTO
 {
-    [MaxBookingHours(maxBookingHours: 8, ErrorMessage = "Booking time should not exceed {0} hours!")]
-    [MinBookingMinutes(minBookingMinutes: 30, ErrorMessage = "Booking time should not be less then {0} minutes!")]
+    [BookingStartDateLessEndDate(ErrorMessage = "Booking Start date should be less then End date")]
+    [MaxBookingHours(maxBookingHours: 8, ErrorMessage = "Booking time should not exceed {0} hours")]
+    [MinBookingMinutes(minBookingMinutes: 30, ErrorMessage = "Booking time should not be less then {0} minutes")]
     public class BookingInputDTO
     {
         [Required(ErrorMessage = "Start date is not specified")]
@@ -22,11 +23,11 @@ namespace SharedBookingLibrary.DTO
         public DateTime End { get; set; }
 
         [Required(ErrorMessage = "RoomId is not specified")]
-        [Range(1, 10000, ErrorMessage = "Value for {0} must be between {1} and {2}.")]
+        [Range(1, 10000, ErrorMessage = "Value for {0} must be between {1} and {2}")]
         public int RoomId { get; set; }
 
         [Required(ErrorMessage = "UserId is not specified")]
-        [Range(1, 10000, ErrorMessage = "Value for {0} must be between {1} and {2}.")]
+        [Range(1, 10000, ErrorMessage = "Value for {0} must be between {1} and {2}")]
         public int UserId { get; set; }
 
     }
