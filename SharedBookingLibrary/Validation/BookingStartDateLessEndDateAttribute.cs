@@ -11,11 +11,6 @@ namespace SharedBookingLibrary.Validation
 {
     class BookingStartDateLessEndDateAttribute : ValidationAttribute
     {
-        //int _maxBookingHours;
-        //public BookingStartDateLessEndDateAttribute(int maxBookingHours)
-        //{
-        //    _maxBookingHours = maxBookingHours;
-        //}
         public override bool IsValid(object value)
         {
             if (value == null)
@@ -34,10 +29,5 @@ namespace SharedBookingLibrary.Validation
 
             return true;
         }
-
-        //public override string FormatErrorMessage(string name)
-        //{
-        //    return String.Format(CultureInfo.CurrentCulture, ErrorMessageString, _maxBookingHours);
-        //}
     }
 }

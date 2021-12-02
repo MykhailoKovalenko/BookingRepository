@@ -21,6 +21,8 @@ using System.Text.Json;
 using BookingRooms.Models.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Protocols;
+using BookingRooms.ActionFilters;
+using BookingRooms.Models;
 
 namespace BookingRooms
 {
@@ -40,6 +42,9 @@ namespace BookingRooms
 
             services.AddDbContext<BRoomsContext>(
                     options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddScoped<AsyncActionFilterRoomValidation>();
+            services.AddScoped<AsyncActionFilterRoomIdValidation>();
 
             services.AddDbContext<AppIdentityContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));

@@ -31,6 +31,13 @@ namespace BookingRooms.DataAccessLayer.Repository
                     .FirstOrDefaultAsync(i => i.Id == id);
         }
 
+        public async Task<Room> GetByNameAsync(string name)
+        {
+            return await _context.Rooms
+                    .Include(i => i.Bookings)
+                    .FirstOrDefaultAsync(i => i.Name == name);
+        }
+
         public async Task<Room> AddAsync(Room room)
         {
             _context.Rooms.Add(room);
