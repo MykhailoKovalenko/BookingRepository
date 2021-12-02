@@ -19,6 +19,7 @@ namespace BookingRooms.Services
 
         public async Task<IEnumerable<User>> GetAllAsync() => await _userRepository.GetAllAsync();
         public async Task<User> GetAsync(int id) => await _userRepository.GetAsync(id);
+        public async Task<User> GetByNameAsync(string name) => await _userRepository.GetByNameAsync(name);
         public async Task<User> AddAsync(User user) => await _userRepository.AddAsync(user);
         public async Task<bool> UpdateAsync(User user) => await _userRepository.UpdateAsync(user);
         public async Task<bool> DeleteAsync(int id) => await _userRepository.DeleteAsync(id);

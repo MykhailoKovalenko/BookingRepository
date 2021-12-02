@@ -10,6 +10,7 @@ namespace BookingRooms.DataAccessLayer.Repository
     {
             Task<IEnumerable<User>> GetAllAsync();
             Task<User> GetAsync(int id);
+            Task<User> GetByNameAsync(string name);
             Task<User> AddAsync(User user);
             Task<bool> UpdateAsync(User user);
             Task<bool> DeleteAsync(int id);

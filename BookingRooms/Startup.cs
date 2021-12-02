@@ -43,8 +43,12 @@ namespace BookingRooms
             services.AddDbContext<BRoomsContext>(
                     options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddScoped<AsyncActionFilterBookingValidation>();
+            services.AddScoped<AsyncActionFilterBookingIdValidation>();
             services.AddScoped<AsyncActionFilterRoomValidation>();
             services.AddScoped<AsyncActionFilterRoomIdValidation>();
+            services.AddScoped<AsyncActionFilterUserValidation>();
+            services.AddScoped<AsyncActionFilterUserIdValidation>();
 
             services.AddDbContext<AppIdentityContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
@@ -98,10 +102,7 @@ namespace BookingRooms
             });
 
             app.UseSwagger();
-            app.UseSwaggerUI();
-
-            
-            
+            app.UseSwaggerUI();      
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BookingRooms.ActionFilters;
 using BookingRooms.Interfaces;
 using BookingRooms.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -40,12 +41,10 @@ namespace BookingRooms.Controllers
         [HttpGet("{id}", Name = nameof(GetBooking))]
         [ProducesResponseType(200, Type = typeof(BookingOutputDTO))]
         [ProducesResponseType(404)]
+        [ServiceFilter(typeof(AsyncActionFilterBookingIdValidation))]
         public async Task<ActionResult<BookingOutputDTO>> GetBooking(int id)
         {
             var booking = await _bookingService.GetAsync(id);
-
-            if (booking == null)
-                return NotFound();
 
             return Ok(_mapper.Map<BookingOutputDTO>(booking));
         }
@@ -58,21 +57,10 @@ namespace BookingRooms.Controllers
         [ProducesResponseType(201, Type = typeof(BookingOutputDTO))]
         [ProducesResponseType(400)]
         [ProducesResponseType(422)]
+        [ServiceFilter(typeof(AsyncActionFilterBookingValidation))]
         public async Task<ActionResult<BookingOutputDTO>> Create([FromBody] BookingInputDTO bookingInputDTO)
         {
-            Booking booking = _mapper.Map<Booking>(bookingInputDTO);
-
-            if (booking == null)
-                return BadRequest();
-
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            //if(!_bookingService.Validate(out string message))
-
-            //var freeRoomIds = _roomService.GetFree(booking.Start, booking.End).Select(i => i.Id);
-            //if (!freeRoomIds.Contains(booking.RoomId))
-            //    return UnprocessableEntity(new { error = "Sorry! The room is occupied at this time.", roomId = booking.RoomId });
+            Booking booking = HttpContext.Items["booking"] as Booking;
 
             await _bookingService.AddAsync(booking);
 
@@ -89,24 +77,14 @@ namespace BookingRooms.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
+        [ServiceFilter(typeof(AsyncActionFilterBookingValidation), Order = 1)]
+        [ServiceFilter(typeof(AsyncActionFilterBookingIdValidation), Order = 2)]
         public async Task<ActionResult> Update(int id, [FromBody] BookingInputDTO bookingInputDTO)
         {
-            Booking booking = _mapper.Map<Booking>(bookingInputDTO);
-
-            if (booking == null || id != booking.Id)
-                return BadRequest();
-
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            var existingBooking = await _bookingService.GetAsync(id);
-            if (existingBooking == null)
-                return NotFound();
+            Booking booking = HttpContext.Items["booking"] as Booking;
+            booking.Id = id;
 
             var result = await _bookingService.UpdateAsync(booking);
-
-            //if(!result)
-            //    return 
 
             return NoContent();
         }
@@ -118,13 +96,9 @@ namespace BookingRooms.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
+        [ServiceFilter(typeof(AsyncActionFilterBookingIdValidation))]
         public async Task<ActionResult> Delete(int id)
         {
-            var booking = await _bookingService.GetAsync(id);
-
-            if (booking == null)
-                return NotFound();
-
             var result = await _bookingService.DeleteAsync(id);
 
             return NoContent();

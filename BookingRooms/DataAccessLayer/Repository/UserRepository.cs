@@ -30,6 +30,13 @@ namespace BookingRooms.DataAccessLayer.Repository
                     .FirstOrDefaultAsync(i => i.Id == id);
         }
 
+        public async Task<User> GetByNameAsync(string name)
+        {
+            return await _context.Users
+                    .Include(i => i.Bookings)
+                    .FirstOrDefaultAsync(i => i.Name == name);
+        }
+
         public async Task<User> AddAsync(User user)
         {
             _context.Users.Add(user);

@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BookingRooms.ActionFilters;
 
 namespace BookingRooms.Controllers
 {
@@ -36,12 +37,10 @@ namespace BookingRooms.Controllers
         [HttpGet("{id}", Name = nameof(GetUser))]
         [ProducesResponseType(200, Type = typeof(UserOutputDTO))]
         [ProducesResponseType(404)]
+        [ServiceFilter(typeof(AsyncActionFilterUserIdValidation))]
         public async Task<ActionResult<UserOutputDTO>> GetUser(int id)
         {
             var user = await _userService.GetAsync(id);
-
-            if (user == null)
-                return NotFound();
 
             return Ok(_mapper.Map<UserOutputDTO>(user));
         }
@@ -52,15 +51,10 @@ namespace BookingRooms.Controllers
         [HttpPost]
         [ProducesResponseType(201, Type = typeof(UserOutputDTO))]
         [ProducesResponseType(400)]
+        [ServiceFilter(typeof(AsyncActionFilterUserValidation))]
         public async Task<ActionResult<UserOutputDTO>> Create([FromBody] UserInputDTO userInputDTO)
         {
-            User user = _mapper.Map<User>(userInputDTO);
-
-            if (user == null)
-                return BadRequest();
-
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            User user = HttpContext.Items["user"] as User;
 
             await _userService.AddAsync(user);
 
@@ -77,19 +71,12 @@ namespace BookingRooms.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
+        [ServiceFilter(typeof(AsyncActionFilterUserValidation), Order = 1)]
+        [ServiceFilter(typeof(AsyncActionFilterUserIdValidation), Order = 2)]
         public async Task<ActionResult> Update(int id, [FromBody] UserInputDTO userInputDTO)
         {
-            User user = _mapper.Map<User>(userInputDTO);
-
-            if (user == null || id != user.Id)
-                return BadRequest();
-
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            var existingUser = await _userService.GetAsync(id);
-            if (existingUser == null)
-                return NotFound();
+            User user = HttpContext.Items["user"] as User;
+            user.Id = id;
 
             var result = await _userService.UpdateAsync(user);
 
@@ -103,13 +90,9 @@ namespace BookingRooms.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
+        [ServiceFilter(typeof(AsyncActionFilterUserIdValidation))]
         public async Task<ActionResult> Delete(int id)
         {
-            var user = await _userService.GetAsync(id);
-
-            if (user == null)
-                return NotFound();
-
             var result = await _userService.DeleteAsync(id);
 
             return NoContent();
