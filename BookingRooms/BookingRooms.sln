@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookingClient", "..\Booking
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedBookingLibrary", "..\SharedBookingLibrary\SharedBookingLibrary.csproj", "{0167A3CB-D8CD-4FB7-AF7F-98601AA1FA66}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingBlazorClient", "..\BookingBlazorClient\BookingBlazorClient.csproj", "{17229496-3A1E-45FF-88B5-123AC577D0E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookingBlazorClient", "..\BookingBlazorClient\BookingBlazorClient.csproj", "{17229496-3A1E-45FF-88B5-123AC577D0E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

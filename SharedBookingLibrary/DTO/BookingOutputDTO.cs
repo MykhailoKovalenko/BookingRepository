@@ -12,6 +12,8 @@ namespace SharedBookingLibrary.DTO
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public int RoomId { get; set; }
+        public string RoomName { get; set; }
         public int UserId { get; set; }
+        public string UserName { get; set; }
     }
 }

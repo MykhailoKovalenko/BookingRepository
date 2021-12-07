@@ -17,7 +17,7 @@ namespace BookingBlazorClient.Pages
 
         private RoomOutputDTO[] rooms;
         protected override async Task OnInitializedAsync() =>
-            rooms = await Http.GetFromJsonAsync<RoomOutputDTO[]>("https://localhost:44391/Room");
+            rooms = await Http.GetFromJsonAsync<RoomOutputDTO[]>("/Room");
 
     }
 }
