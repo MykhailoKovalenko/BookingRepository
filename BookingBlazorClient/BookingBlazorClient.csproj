@@ -16,4 +16,8 @@
     <ProjectReference Include="..\SharedBookingLibrary\SharedBookingLibrary.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\sample-data\" />
+  </ItemGroup>
+
 </Project>

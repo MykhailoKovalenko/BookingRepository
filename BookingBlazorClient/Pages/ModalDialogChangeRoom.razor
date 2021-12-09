@@ -1,0 +1,100 @@
+﻿<div class="modal fade show" id="modalDelete" style="display:block; background-color: rgba(10,10,10,.4);" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@Title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" @onclick="@ModalCancel">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row d-flex justify-content-between">
+                    <div class="col-4 font-segoeUI font-weight-light">
+                        <div class="d-flex align-items-center justify-content-start">
+                            <span class="oi oi-clock font-size-0_75 text-black-50 p-2"></span>
+                            <span class="font-size-1_25">@Booking.Start.ToShortTimeString() - @Booking.End.ToShortTimeString()</span>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-start">
+                            <span class="oi oi-calendar font-size-0_75 text-black-50 p-2"></span>
+                            <span class="font-size-1">@Booking.Start.ToString("d MMMM", CultureInfo_EN)</span>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-start">
+                            <span class="oi oi-person font-size-0_75 text-black-50 p-2"></span>
+                            <span class="font-size-1">@Booking.UserName</span>
+                        </div>
+                    </div>
+                    <div class="col-8 input-group mb-3">
+
+                        <select class="custom-select">
+                            <option selected>Select room...</option>
+                            @if (rooms != null)
+                            {
+                                @foreach (var room in rooms)
+                                {
+                                    <option value=@room.Id>@room.Name (places: @room.Places, projector: @(room.IsProjector ? "yes":"no"))</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="@ModalCancel">Close</button>
+                <button type="button" class="btn btn-primary btn-sm" @onclick="@ModalOk">Change room</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    .font-segoeUI {
+        font-family: Segoe UI;
+    }
+
+    .font-size-0_75 {
+        font-size: 0.75rem;
+    }
+
+    .font-size-1 {
+        font-size: 1rem;
+    }
+
+    .font-size-1_25 {
+        font-size: 1.25rem;
+    }
+
+    .font-size-1_5 {
+        font-size: 1.5rem;
+    }
+
+    .font-size-1_75 {
+        font-size: 1.75rem;
+    }
+
+    .font-size-2 {
+        font-size: 2rem;
+    }
+
+    .font-size-2_25 {
+        font-size: 2.25rem;
+    }
+
+    .font-size-2_5 {
+        font-size: 2.5rem;
+    }
+
+    .font-size-2_75 {
+        font-size: 2.75rem;
+    }
+
+    .font-size-3 {
+        font-size: 3rem;
+    }
+
+    .font-size-4 {
+        font-size: 4rem;
+    }
+</style>

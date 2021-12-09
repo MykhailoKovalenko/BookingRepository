@@ -2,6 +2,7 @@
 using SharedBookingLibrary.DTO;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -15,7 +16,11 @@ namespace BookingBlazorClient.Pages
         private HttpClient Http { get; set; }
         private BookingOutputDTO[] bookings;
         private BookingOutputDTO _bookingToDelete;
+        private BookingOutputDTO _bookingToChangeRoom;
+        //private RoomOutputDTO[] rooms;
         public bool DeleteDialogOpen { get; set; }
+        public bool ChangeRoomDialogOpen { get; set; }
+        private CultureInfo CultureInfo_EN = CultureInfo.CreateSpecificCulture("en-US");
 
         private async Task OnDeleteDialogClose(bool accepted)
         {
@@ -49,5 +54,26 @@ namespace BookingBlazorClient.Pages
 
             bookings = await Http.GetFromJsonAsync<BookingOutputDTO[]>($"/Booking/forPeriod?Start={start}&End={end}");
         }
+
+        private async Task OnChangeRoomDialogClose(bool accepted)
+        {
+            if (accepted)
+            {
+                //await Http.DeleteAsync($"/Booking/{_bookingToDelete.Id}");
+                await LoadData();
+                _bookingToChangeRoom = null;
+            }
+
+            ChangeRoomDialogOpen = false;
+            StateHasChanged();
+        }
+
+        private void OpenChangeRoomDialog(BookingOutputDTO booking)
+        {
+            ChangeRoomDialogOpen = true;
+            _bookingToChangeRoom = booking;
+            StateHasChanged();
+        }
+        
     }
 }

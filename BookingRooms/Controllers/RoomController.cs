@@ -67,7 +67,7 @@ namespace BookingRooms.Controllers
         [ProducesResponseType(200, Type = typeof(IEnumerable<RoomOutputDTO>))]
         public async Task<ActionResult<IEnumerable<RoomOutputDTO>>> GetFree([FromQuery] DateTime start, [FromQuery] DateTime end)
         {
-            return Ok(_mapper.Map<RoomOutputDTO>(await _roomService.GetFreeAsync(start, end)));
+            return Ok(_mapper.Map<IEnumerable<RoomOutputDTO>>(await _roomService.GetFreeAsync(start, end)));
         }
 
     #endregion
