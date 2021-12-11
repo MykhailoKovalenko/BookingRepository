@@ -1,4 +1,4 @@
-﻿<div class="modal fade show" id="modalDelete" style="display:block; background-color: rgba(10,10,10,.4);" role="dialog">
+﻿<div class="modal fade show" id="modalChangeRoom" style="display:block; background-color: rgba(10,10,10,.4);" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -23,10 +23,9 @@
                             <span class="font-size-1">@Booking.UserName</span>
                         </div>
                     </div>
-                    <div class="col-8 input-group mb-3">
-
-                        <select class="custom-select">
-                            <option selected>Select room...</option>
+                    <div class="col-8 d-flex flex-column input-group mb-3 was-validated ">
+                        <select class="custom-select w-100 @ValidString" id="inputGroupSelectRoom" @onselect="@OnSelectRoom" @bind=@selectedRoomId required>
+                            <option selected></option>
                             @if (rooms != null)
                             {
                                 @foreach (var room in rooms)
@@ -35,6 +34,9 @@
                                 }
                             }
                         </select>
+                        <div class="text-danger">
+                            <small>@ErrorMessage @_erm</small>
+                        </div>
                     </div>
                 </div>
 
@@ -42,7 +44,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="@ModalCancel">Close</button>
-                <button type="button" class="btn btn-primary btn-sm" @onclick="@ModalOk">Change room</button>
+                <button type="submit" class="btn btn-primary btn-sm" @onclick="@ModalOk">Change room</button>
             </div>
 
         </div>

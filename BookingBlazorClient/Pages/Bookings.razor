@@ -47,7 +47,10 @@ else
 
     @if (ChangeRoomDialogOpen)
     {
-        <ModalDialogChangeRoom Title="Select new room" Booking=_bookingToChangeRoom OnClose="@OnChangeRoomDialogClose"></ModalDialogChangeRoom>
+        <ModalDialogChangeRoom Title="Select new room" 
+                               ErrorMessage=@_errorMessage 
+                               Booking=_bookingToChangeRoom 
+                               OnClose="@OnChangeRoomDialogClose"></ModalDialogChangeRoom>
     }
 
 }

@@ -64,8 +64,7 @@ namespace BookingRooms.ActionFilters
                                                                                                 { { "error", "Sorry! The room is occupied at this time." },
                                                                                                   { "RoomId", booking.RoomId.ToString() } }
                             });
-
-                        
+    
                     return false;
                 }
 

@@ -17,31 +17,12 @@ namespace BookingBlazorClient.Pages
         private BookingOutputDTO[] bookings;
         private BookingOutputDTO _bookingToDelete;
         private BookingOutputDTO _bookingToChangeRoom;
-        //private RoomOutputDTO[] rooms;
+        private string _errorMessage;
+        private bool _selectIsValid;
         public bool DeleteDialogOpen { get; set; }
         public bool ChangeRoomDialogOpen { get; set; }
         private CultureInfo CultureInfo_EN = CultureInfo.CreateSpecificCulture("en-US");
 
-        private async Task OnDeleteDialogClose(bool accepted)
-        {
-            if(accepted)
-            {
-                await Http.DeleteAsync($"/Booking/{_bookingToDelete.Id}");
-                await LoadData();
-                _bookingToDelete = null;
-            }
-            
-            DeleteDialogOpen = false;
-            StateHasChanged();
-        }
-
-        private void OpenDeleteDialog(BookingOutputDTO booking)
-        {
-            DeleteDialogOpen = true;
-            _bookingToDelete = booking;
-            StateHasChanged();
-        }
-        
         protected override async Task OnInitializedAsync()
         {
             await LoadData();    
@@ -55,25 +36,132 @@ namespace BookingBlazorClient.Pages
             bookings = await Http.GetFromJsonAsync<BookingOutputDTO[]>($"/Booking/forPeriod?Start={start}&End={end}");
         }
 
-        private async Task OnChangeRoomDialogClose(bool accepted)
+        #region ModalDialogDelete
+
+        private void OpenDeleteDialog(BookingOutputDTO booking)
+        {
+            DeleteDialogOpen = true;
+            _bookingToDelete = booking;
+            StateHasChanged();
+        }
+
+        private async Task OnDeleteDialogClose(bool accepted)
         {
             if (accepted)
             {
-                //await Http.DeleteAsync($"/Booking/{_bookingToDelete.Id}");
+                await Http.DeleteAsync($"/Booking/{_bookingToDelete.Id}");
                 await LoadData();
-                _bookingToChangeRoom = null;
+                _bookingToDelete = null;
             }
 
-            ChangeRoomDialogOpen = false;
+            DeleteDialogOpen = false;
             StateHasChanged();
         }
+
+        #endregion
+
+        #region ModalDialogChangeRoom
 
         private void OpenChangeRoomDialog(BookingOutputDTO booking)
         {
             ChangeRoomDialogOpen = true;
             _bookingToChangeRoom = booking;
+            _errorMessage = "Please, select room!";
+            _selectIsValid = false;
             StateHasChanged();
         }
-        
+
+        private async Task OnChangeRoomDialogClose((bool accepted, int selectedRoomId) selectionResult)
+        {
+            if(!selectionResult.accepted)
+            {
+                ChangeRoomDialogOpen = false;
+                StateHasChanged();
+                return;
+            }
+
+            if(selectionResult.selectedRoomId == 0)
+            {
+                _errorMessage = "Please, select room!";
+                _selectIsValid = false;
+                StateHasChanged();
+                return;
+            }
+
+            _bookingToChangeRoom.RoomId = selectionResult.selectedRoomId;
+
+            HttpResponseMessage response = await Http.PutAsJsonAsync($"/Booking/{_bookingToChangeRoom.Id}", _bookingToChangeRoom);
+
+            if(response.IsSuccessStatusCode)
+            {
+                ChangeRoomDialogOpen = false;
+                _errorMessage = "";
+                _selectIsValid = true;
+
+                await LoadData();
+                _bookingToChangeRoom = null;
+
+                StateHasChanged();
+                return;
+            }
+            else
+            {
+                var errorString = response.Content.ReadAsStringAsync();
+                _errorMessage = errorString.Result;
+                _selectIsValid = false;
+                StateHasChanged();
+            }
+        }
+
+        #endregion
+        //private async Task UpdateBookingRoomAsync(BookingOutputDTO Booking, int selectedRoomId)
+        //{
+
+        //    Booking.RoomId = selectedRoomId;
+
+        //    try
+        //    {
+
+
+        //        HttpResponseMessage response = await Http.PutAsJsonAsync($"/Booking/{Booking.Id}", Booking);
+
+        //        var dfkhknh = response.IsSuccessStatusCode;
+
+        //        Task<string> err = response.Content.ReadAsStringAsync();
+
+        //        var readAsStringAsync = response.Content.ReadAsStringAsync();
+        //        string dfjg = readAsStringAsync.Result;
+
+        //        var scode = response.StatusCode;
+        //        string sscode = scode.ToString();
+
+        //        //string json = JsonSerializer.Serialize<Person>(tom);
+
+        //        //Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(employeesFromDb.MetaData));
+
+        //        //SystemTextJsonOutputFormatter
+
+
+
+        //        //Stream receiveStream = response.GetResponseStream();
+        //        //StreamReader readStream = new StreamReader(receiveStream, Encoding.UTF8);
+        //        //txtBlock.Text = readStream.ReadToEnd();
+
+        //        // string err = hc.ToString();
+
+        //        string ss = await response.Content.ReadFromJsonAsync<string>();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        string mes = ex.Message;
+        //        int fg = 5;
+        //    }
+
+
+        //    //return Task;
+        //}
+
+
+
     }
 }

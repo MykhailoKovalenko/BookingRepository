@@ -69,6 +69,23 @@ namespace BookingRooms.Controllers
             return CreatedAtAction(nameof(Create), new { id = bookingOutputDTO.Id }, bookingOutputDTO);
         }
 
+        #endregion
+
+    #region changeRoom
+
+        [HttpPut("{id}/roomId={roomId}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ServiceFilter(typeof(AsyncActionFilterBookingIdValidation), Order = 1)]
+        [ServiceFilter(typeof(AsyncActionFilterBookingRoomIdValidation), Order = 2)]
+        public async Task<ActionResult> ChangeRoomAsync(int id, int roomId)
+        {
+            var result = await _bookingService.ChangeRoomAsync(id, roomId);
+
+            return NoContent();
+        }
+
     #endregion
 
     #region update
@@ -89,7 +106,7 @@ namespace BookingRooms.Controllers
             return NoContent();
         }
 
-        #endregion
+    #endregion
 
     #region delete
 
