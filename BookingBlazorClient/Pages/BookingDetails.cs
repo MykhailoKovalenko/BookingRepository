@@ -18,10 +18,25 @@ namespace BookingBlazorClient.Pages
         [Parameter]
         public string ButtonText { get; set; }
         [Parameter]
-        public EventCallback OnValidSubmit { get; set; }
+        public string ErrorMessage { get; set; }
+        //[Parameter]
+        //public EventCallback OnValidSubmit { get; set; }
+
+        [Parameter]
+        public EventCallback<bool> OnClose { get; set; }
 
         private RoomOutputDTO[] rooms;
         private UserOutputDTO[] users;
+
+        private Task Cancel()
+        {
+            return OnClose.InvokeAsync(false);
+        }
+
+        private Task Ok()
+        {
+            return OnClose.InvokeAsync(true);
+        }
 
         protected override async Task OnInitializedAsync()
         {

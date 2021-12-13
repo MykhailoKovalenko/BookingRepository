@@ -4,4 +4,5 @@
 <h3>Create Booking</h3>
 <BookingDetails ButtonText="Create"
                 Booking="@_booking"
-                OnValidSubmit="@Create" />
+                OnClose="@OnCreateBookingClose"
+                ErrorMessage="@_errorMessage"/>

@@ -53,9 +53,13 @@
         </div>
     </div>
 
+    <div class="text-danger m-left-3">
+        <small>@ErrorMessage</small>
+    </div>
+
     <div class="modal-footer w-50">
-        <button type="button" class="btn btn-secondary">Close</button>
-        <button type="submit" class="btn btn-success btn-sm">
+        <button type="button" class="btn btn-secondary" @onclick="@Cancel">Close</button>
+        <button type="submit" class="btn btn-success btn-sm" @onclick="@Ok">
             @ButtonText
         </button>
     </div>
