@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SharedBookingLibrary.DTO
 {
-    public class BookingOutputDTO
+    public class BookingOutputDTO : ICloneable
     {
         public int Id { get; set; }
         public DateTime Start { get; set; }
@@ -15,5 +15,10 @@ namespace SharedBookingLibrary.DTO
         public string RoomName { get; set; }
         public int UserId { get; set; }
         public string UserName { get; set; }
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
     }
 }

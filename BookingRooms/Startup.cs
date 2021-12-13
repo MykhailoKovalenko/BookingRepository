@@ -45,7 +45,6 @@ namespace BookingRooms
 
             services.AddScoped<AsyncActionFilterBookingValidation>();
             services.AddScoped<AsyncActionFilterBookingIdValidation>();
-            services.AddScoped<AsyncActionFilterBookingRoomIdValidation>();
             services.AddScoped<AsyncActionFilterRoomValidation>();
             services.AddScoped<AsyncActionFilterRoomIdValidation>();
             services.AddScoped<AsyncActionFilterUserValidation>();

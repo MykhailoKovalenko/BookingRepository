@@ -45,15 +45,6 @@ namespace BookingRooms.DataAccessLayer.Repository
             return booking;
         }
 
-        public async Task<bool> ChangeRoomAsync(int id, int roomId)
-        {
-            Booking existingbooking = await GetAsync(id);
-
-            existingbooking.RoomId = roomId;
-
-            return await SaveChangesAsync();
-        }
-
         public async Task<bool> UpdateAsync(Booking booking)
         {
             Booking existingbooking = await GetAsync(booking.Id);

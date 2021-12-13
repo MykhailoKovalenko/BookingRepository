@@ -31,6 +31,16 @@ namespace BookingRooms.Services
 
             return freeRooms;
         }
+
+        public async Task<IEnumerable<Room>> GetFreeForBookingAsync(DateTime startDate, DateTime endDate, Booking booking)
+        {
+            var bookedRoomIds = (await _bookingRepository.GetAllForPeriodAsync(startDate, endDate)).Where(i => i.Id != booking.Id).Select(i => i.RoomId);
+
+            var freeRooms = (await _roomRepository.GetAllAsync()).Where(i => !bookedRoomIds.Contains(i.Id));
+
+            return freeRooms;
+        }
+
         public async Task<Room> AddAsync(Room room) => await _roomRepository.AddAsync(room);
         public async Task<bool> UpdateAsync(Room room) => await _roomRepository.UpdateAsync(room);
         public async Task<bool> DeleteAsync(int id) => await _roomRepository.DeleteAsync(id);

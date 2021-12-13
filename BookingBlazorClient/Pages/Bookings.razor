@@ -1,16 +1,21 @@
 ﻿@page "/bookings"
 
-<h3>Bookings</h3>
-
 @if (bookings == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
+    <div class="d-flex">
+        <h5 class="m-2 font-weight-bold">Bookings</h5>
+        <a class="btn btn-success btn-sm m-1" href="createbooking">
+            Create new
+        </a>
+    </div>
+
     <ol class="list-group">
         <li class="list-group-item d-flex justify-content-center align-items-start text-center text-black-50" style="background-color: rgba(10,10,10,0.1);">
-            <div class="col-2"><span class="oi oi-home"></span></div>
+            <div class="col-2"><img src="/images/room19.png" class="opacity_06" /></div>
             <div class="col-2"><span class="oi oi-calendar"></span></div>
             <div class="col-2"><span class="oi oi-person"></span></div>
             <div class="col-4"><span class="oi oi-pencil"></span></div>
@@ -31,7 +36,7 @@ else
                 <div class="col-2">@booking.UserName</div>
                 <div class="col-4">
                     <button type="button" class="btn btn-primary btn-sm" @onclick="() => OpenChangeRoomDialog(booking)">Change room</button>
-                    <button type="button" class="btn btn-primary btn-sm">Change period</button>
+                    <button type="button" class="btn btn-primary btn-sm" @onclick="() => OpenChangePeriodDialog(booking)">Change period</button>
                 </div>
                 <div class="col-2">
                     <button type="button" class="btn btn-danger btn-sm" @onclick="() => OpenDeleteDialog(booking)">Delete</button>
@@ -47,10 +52,80 @@ else
 
     @if (ChangeRoomDialogOpen)
     {
-        <ModalDialogChangeRoom Title="Select new room" 
-                               ErrorMessage=@_errorMessage 
-                               Booking=_bookingToChangeRoom 
+        <ModalDialogChangeRoom Title="Select new room"
+                               ErrorMessage=@_errorMessage
+                               Booking=_bookingToChangeRoom
                                OnClose="@OnChangeRoomDialogClose"></ModalDialogChangeRoom>
     }
 
+    @if (ChangePeriodDialogOpen)
+    {
+        <ModalDialogChangePeriod Title="Specify a new period"
+                                 ErrorMessage=@_errorMessage
+                                 Booking=_bookingToChangePeriod
+                                 OnClose="@OnChangePeriodDialogClose"></ModalDialogChangePeriod>
+    }
+
 }
+
+<style>
+    .font-segoeUI {
+        font-family: Segoe UI;
+    }
+
+    .font-size-0_75 {
+        font-size: 0.75rem;
+    }
+
+    .font-size-1 {
+        font-size: 1rem;
+    }
+
+    .font-size-1_25 {
+        font-size: 1.25rem;
+    }
+
+    .font-size-1_5 {
+        font-size: 1.5rem;
+    }
+
+    .font-size-1_75 {
+        font-size: 1.75rem;
+    }
+
+    .font-size-2 {
+        font-size: 2rem;
+    }
+
+    .font-size-2_25 {
+        font-size: 2.25rem;
+    }
+
+    .font-size-2_5 {
+        font-size: 2.5rem;
+    }
+
+    .font-size-2_75 {
+        font-size: 2.75rem;
+    }
+
+    .font-size-3 {
+        font-size: 3rem;
+    }
+
+    .font-size-4 {
+        font-size: 4rem;
+    }
+
+    .opacity_05 {
+        opacity: 0.5;
+    }
+
+    .opacity_06 {
+        opacity: 0.6;
+    }
+
+    .m-left-3 {
+        margin-left: 3rem;
+    }
+</style>

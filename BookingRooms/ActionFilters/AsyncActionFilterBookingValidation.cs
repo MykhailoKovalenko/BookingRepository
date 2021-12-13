@@ -15,11 +15,13 @@ namespace BookingRooms.ActionFilters
     {
         private readonly IBookingService _bookingService;
         private readonly IRoomService _roomService;
+        private readonly IUserService _userService;
         private readonly IMapper _mapper;
-        public AsyncActionFilterBookingValidation(IBookingService bookingService, IRoomService roomService, IMapper mapper)
+        public AsyncActionFilterBookingValidation(IBookingService bookingService, IRoomService roomService, IUserService userService, IMapper mapper)
         {
             _bookingService = bookingService;
             _roomService = roomService;
+            _userService = userService;
             _mapper = mapper;
         }
 
@@ -57,7 +59,26 @@ namespace BookingRooms.ActionFilters
                     return false;
                 }
 
-                var freeRoomIds = (await _roomService.GetFreeAsync(booking.Start, booking.End)).Select(i => i.Id);
+                var room = await _roomService.GetAsync(booking.RoomId);
+                if(room == null)
+                {
+                    context.Result = new BadRequestObjectResult($"Room with Id = {booking.RoomId} was not found");
+                    return false;
+                }
+
+                var user = await _userService.GetAsync(booking.UserId);
+                if (user == null)
+                {
+                    context.Result = new BadRequestObjectResult($"User with Id = {booking.UserId} was not found");
+                    return false;
+                }
+
+                if (context.ActionArguments.ContainsKey("id"))
+                {
+                    booking.Id = (int)context.ActionArguments["id"];
+                }
+
+                var freeRoomIds = (await _roomService.GetFreeForBookingAsync(booking.Start, booking.End, booking)).Select(i => i.Id);
                 if (!freeRoomIds.Contains(booking.RoomId))
                 {
                     context.Result = new UnprocessableEntityObjectResult(new { errors = new Dictionary<string, string>()

@@ -1,0 +1,7 @@
+﻿@page "/createbooking"
+@inject NavigationManager navigation
+
+<h3>Create Booking</h3>
+<BookingDetails ButtonText="Create"
+                Booking="@_booking"
+                OnValidSubmit="@Create" />

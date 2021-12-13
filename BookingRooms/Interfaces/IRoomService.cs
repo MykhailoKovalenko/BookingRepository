@@ -12,6 +12,7 @@ namespace BookingRooms.Interfaces
         Task<Room> GetAsync(int id);
         Task<Room> GetByNameAsync(string name);
         Task<IEnumerable<Room>> GetFreeAsync(DateTime startDate, DateTime endDate);
+        Task<IEnumerable<Room>> GetFreeForBookingAsync(DateTime startDate, DateTime endDate, Booking booking);
         Task<Room> AddAsync(Room room);
         Task<bool> UpdateAsync(Room room);
         Task<bool> DeleteAsync(int id);

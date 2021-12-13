@@ -25,8 +25,6 @@ namespace BookingRooms.Services
 
         public async Task<Booking> AddAsync(Booking booking) => await _bookingRepository.AddAsync(booking);
 
-        public async Task<bool> ChangeRoomAsync(int id, int roomId) => await _bookingRepository.ChangeRoomAsync(id, roomId);
-
         public async Task<bool> UpdateAsync(Booking booking) => await _bookingRepository.UpdateAsync(booking);
 
         public async Task<bool> DeleteAsync(int id) => await _bookingRepository.DeleteAsync(id);

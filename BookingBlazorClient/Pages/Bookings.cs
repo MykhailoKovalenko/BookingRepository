@@ -17,10 +17,13 @@ namespace BookingBlazorClient.Pages
         private BookingOutputDTO[] bookings;
         private BookingOutputDTO _bookingToDelete;
         private BookingOutputDTO _bookingToChangeRoom;
+        private BookingOutputDTO _bookingToChangePeriod;
         private string _errorMessage;
         private bool _selectIsValid;
         public bool DeleteDialogOpen { get; set; }
         public bool ChangeRoomDialogOpen { get; set; }
+        public bool ChangePeriodDialogOpen { get; set; }
+
         private CultureInfo CultureInfo_EN = CultureInfo.CreateSpecificCulture("en-US");
 
         protected override async Task OnInitializedAsync()
@@ -109,6 +112,62 @@ namespace BookingBlazorClient.Pages
                 var errorString = response.Content.ReadAsStringAsync();
                 _errorMessage = errorString.Result;
                 _selectIsValid = false;
+                StateHasChanged();
+            }
+        }
+
+        #endregion
+
+        #region ModalDialogChangePeriod
+
+        private void OpenChangePeriodDialog(BookingOutputDTO booking)
+        {
+            ChangePeriodDialogOpen = true;
+            _bookingToChangePeriod = (BookingOutputDTO) booking.Clone();
+            _errorMessage = "";  //"Please, specify new period!";
+            _selectIsValid = false;
+            StateHasChanged();
+        }
+
+        private async Task OnChangePeriodDialogClose(bool accepted)
+        {
+            if (!accepted)
+            {
+                ChangePeriodDialogOpen = false;
+                StateHasChanged();
+                return;
+            }
+
+            
+            //if (selectionResult.selectedRoomId == 0)
+            //{
+            //    _errorMessage = "Please, select room!";
+            //    _selectIsValid = false;
+            //    StateHasChanged();
+            //    return;
+            //}
+
+            //_bookingToChangeRoom.RoomId = selectionResult.selectedRoomId;
+
+            HttpResponseMessage response = await Http.PutAsJsonAsync($"/Booking/{_bookingToChangePeriod.Id}", _bookingToChangePeriod);
+
+            if (response.IsSuccessStatusCode)
+            {
+                ChangePeriodDialogOpen = false;
+                _errorMessage = "";
+                //_selectIsValid = true;
+
+                await LoadData();
+                _bookingToChangePeriod = null;
+
+                StateHasChanged();
+                return;
+            }
+            else
+            {
+                var errorString = response.Content.ReadAsStringAsync();
+                _errorMessage = errorString.Result;
+                //_selectIsValid = false;
                 StateHasChanged();
             }
         }
