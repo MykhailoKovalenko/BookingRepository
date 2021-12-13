@@ -10,6 +10,8 @@ using BookingRooms.Interfaces;
 using AutoMapper;
 using SharedBookingLibrary.DTO;
 using BookingRooms.ActionFilters;
+using Microsoft.Extensions.Logging;
+using SharedBookingLibrary.RequestClasses;
 
 namespace BookingRooms.Controllers 
 {
@@ -70,9 +72,20 @@ namespace BookingRooms.Controllers
             return Ok(_mapper.Map<IEnumerable<RoomOutputDTO>>(await _roomService.GetFreeAsync(start, end)));
         }
 
-    #endregion
+        #endregion
 
-    #region create
+        #region getByCondition
+
+        [HttpGet("filter")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<RoomOutputDTO>))]
+        public async Task<ActionResult<IEnumerable<RoomOutputDTO>>> GetByCondition([FromQuery] RoomParameters roomParameters)
+        {
+            return Ok(_mapper.Map<IEnumerable<RoomOutputDTO>>(await _roomService.GetByConditionAsync(roomParameters)));
+        }
+
+        #endregion
+
+        #region create
         [HttpPost]
         [ProducesResponseType(201, Type = typeof(RoomOutputDTO))]
         [ProducesResponseType(400)]
@@ -85,7 +98,7 @@ namespace BookingRooms.Controllers
 
             RoomOutputDTO roomOutputDTO = _mapper.Map<RoomOutputDTO>(room);
 
-            return CreatedAtAction(nameof(Create), new { id = roomOutputDTO.Id }, roomOutputDTO);
+            return CreatedAtAction(nameof(Create), new { id = roomOutputDTO.Id }, roomOutputDTO); 
         }
 
     #endregion

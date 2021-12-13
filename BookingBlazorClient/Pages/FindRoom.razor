@@ -1,0 +1,36 @@
+﻿@page "/findroom"
+
+<h5 class="font-weight-bold">Find free room</h5>
+
+<form>
+    <div class="form-row">
+        <div class="form-group col-4">
+            <label for="inputStart" class="mb-0"><small class="text-muted">Choose booking period here</small></label>
+            <input type="datetime-local" id="inputStart" class="form-control" value="@_roomParameters.StartBookingDate.ToString("yyyy-MM-ddTHH:mm")">
+        </div>
+        <div class="form-group col-4">
+            <label for="inputStart"><small class="text-muted"> </small></label>
+            <input type="datetime-local" id="inputEnd" class="form-control" value="@_roomParameters.EndBookingDate.ToString("yyyy-MM-ddTHH:mm")">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-2">
+            <label for="inputMinPlaces" class="mb-0"><small class="text-muted">Min places</small></label>
+            <input type="number" class="form-control" id="inputMinPlaces" min="0" max="1000">
+        </div>
+
+        <div class="form-group col-2">
+            <div class="custom-control custom-switch mt-4">
+                <label for="inputMinPlaces"><small class="text-muted"> </small></label>
+                <input type="checkbox" class="custom-control-input" id="inputNeedProjector">
+                <label class="custom-control-label text-muted" for="inputNeedProjector"><small>Need projector</small></label>
+            </div>
+        </div>
+    </div>
+      
+    <div class="d-flex justify-content-start">
+        <button type="button" class="btn btn-primary btn-sm">Find</button>
+    </div>
+    
+</form>

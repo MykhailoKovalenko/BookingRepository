@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BookingRooms.DBContext;
+using SharedBookingLibrary.RequestClasses;
 
 namespace BookingRooms.DataAccessLayer.Repository
 {

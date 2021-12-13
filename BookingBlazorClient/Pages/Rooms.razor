@@ -1,328 +1,123 @@
 ﻿@page "/rooms"
 
-<h1>R</h1>
-<h3>Rooms</h3>
-
 @if (rooms == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Places</th>
-                <th>Is projector</th>
-            </tr>
+    <div class="d-flex">
+        <h5 class="m-2 font-weight-bold">Rooms</h5>
+        <a class="btn btn-success btn-sm m-1" href="createbooking">
+            Create new
+        </a>
+    </div>
 
-        </thead>
-        <tbody>
-            @foreach (var room in rooms)
-            {
-                <tr>
-                    <td>@room.Id</td>
-                    <td>@room.Name</td>
-                    <td>@room.Places</td>
-                    <td>@room.IsProjector</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <ol class="list-group">
+        <li class="list-group-item d-flex justify-content-center align-items-start text-center text-black-50" style="background-color: rgba(10,10,10,0.1);">
+            <div class="col-2"><span class="oi oi-info"></span></div>
+            <div class="col-2"><img src="/images/chair22.png" class="opacity_06" /></div>
+            <div class="col-2"><span class="oi oi-video"></span></div>
+            <div class="col-2"><span class="oi oi-pencil"></span></div>
+            <div class="col-2"><span class="oi oi-trash"></span></div>
+            <div class="col-2"><span class="oi oi-plus"></span></div>
+        </li>
 
-    <ol class="list-group list-group-numbered">
-        <li class="list-group-item d-flex justify-content-between align-items-start">
-            <div class="ms-2 me-auto">
-                <div class="fw-bold">Subheading</div>
-                Content for list item
-            </div>
-            <span class="badge bg-primary rounded-pill">14</span>
-        </li>
-        <li class="list-group-item d-flex justify-content-between align-items-start">
-            <div class="ms-2 me-auto">
-                <div class="">Subheading</div>
-                Content for list item
-            </div>
-            <span class="badge bg-primary rounded-pill">14</span>
-        </li>
-        <li class="list-group-item d-flex justify-content-between align-items-start">
-            <div class="ms-2 me-auto">
-                <div class="fw-bold">Subheading</div>
-                Content for list item
-            </div>
-            <span class="badge bg-primary rounded-pill">14</span>
-        </li>
+        @foreach (var room in rooms)
+        {
+    <li class="list-group-item d-flex justify-content-center align-items-start bg-light text-center">
+        <div class="col-2">@room.Name</div>
+        <div class="col-2">@room.Places</div>
+        <div class="col-2">@room.IsProjector</div>
+        <div class="col-2">
+            <button type="button" class="btn btn-primary btn-sm" @onclick="() => OpenEditRoomDialog(room)">Edit room</button>
+        </div>
+        <div class="col-2">
+            <button type="button" class="btn btn-danger btn-sm" @onclick="() => OpenDeleteDialog(room)">Delete</button>
+        </div>
+        <div class="col-2">
+            <a class="btn btn-success btn-sm m-1" href="createbooking">
+                Book now
+            </a>
+        </div>
+
+        
+    </li>
+        }
     </ol>
 
-    <nav class="navbar navbar-light bg-light">
-        <div class="container-fluid">
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-        </div>
-    </nav>
+    @if (DeleteDialogOpen)
+    {
+        <ModalDialogDelete Title="Are you sure?" Text="Pay attention, related bookings will be deleted!" OnClose="@OnDeleteDialogClose"></ModalDialogDelete>
+    }
 
-    <div class="list-group">
-        <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
-            <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">List group item heading</h5>
-                <small>3 days ago</small>
-            </div>
-            <p class="mb-1">Some placeholder content in a paragraph.</p>
-            <small>And some small print.</small>
-        </a>
-        <a href="#" class="list-group-item list-group-item-action">
-            <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">List group item heading</h5>
-                <small class="text-muted">3 days ago</small>
-            </div>
-            <p class="mb-1">Some placeholder content in a paragraph.</p>
-            <small class="text-muted">And some muted small print.</small>
-        </a>
-        <a href="#" class="list-group-item list-group-item-action">
-            <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">List group item heading</h5>
-                <small class="text-muted">3 days ago</small>
-            </div>
-            <p class="mb-1">Some placeholder content in a paragraph.</p>
-            <small class="text-muted">And some muted small print.</small>
-        </a>
-    </div>
-
-    <h3>B00</h3>
-
-    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="..." class="d-block w-100" alt="...">
-            </div>
-            <div class="carousel-item">
-                <img src="..." class="d-block w-100" alt="...">
-            </div>
-            <div class="carousel-item">
-                <img src="..." class="d-block w-100" alt="...">
-            </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
-    </div>
-
-    <h3>B2</h3>
-
-
-
-    <div class="container">
-        <div class="row" style="font-family:'Lucida Console'; color:darkseagreen">
-            <div class="col">
-                1 of 3
-            </div>
-            <div class="col-6">
-                2 of 3 (wider)
-            </div>
-            <div class="col">
-                3 of 3
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                1 of 3
-            </div>
-            <div class="col-5">
-                2 of 3 (wider)
-            </div>
-            <div class="col">
-                3 of 3
-            </div>
-        </div>
-    </div>
-
-    <h3>B3</h3>
-    <div class="container">
-        <div class="row justify-content-md-center">
-            <div class="col col-lg-2">
-                1 of 3
-            </div>
-            <div class="col-md-auto">
-                Variable width content
-            </div>
-            <div class="col col-lg-2">
-                3 of 3
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                1 of 3
-            </div>
-            <div class="col-md-auto">
-                Variable width content
-            </div>
-            <div class="col col-lg-2">
-                3 of 3
-            </div>
-        </div>
-    </div>
-
-    <h3>B4</h3>
-    <div class="container">
-        <div class="row">
-            <div class="col">col</div>
-            <div class="col">col</div>
-            <div class="col">col</div>
-            <div class="col">col</div>
-        </div>
-        <div class="row">
-            <div class="col-8">col-8</div>
-            <div class="col-4">col-4</div>
-        </div>
-    </div>
-
-    <h3>B5</h3>
-    <div class="container">
-        <div class="row align-items-start">
-            <div class="col">
-                One of three columns
-            </div>
-            <div class="col">
-                One of three columns
-            </div>
-            <div class="col">
-                One of three columns
-            </div>
-        </div>
-        <div class="row align-items-center">
-            <div class="col">
-                One of three columns
-            </div>
-            <div class="col">
-                One of three columns
-            </div>
-            <div class="col">
-                One of three columns
-            </div>
-        </div>
-        <div class="row align-items-end">
-            <div class="col">
-                One of three columns
-            </div>
-            <div class="col">
-                One of three columns
-            </div>
-            <div class="col">
-                One of three columns
-            </div>
-        </div>
-    </div>
-
-    <h3>B6</h3>
-    <div class="container bg-success p-2 " style="--bs-bg-opacity: .5;">
-        <div class="row justify-content-start border">
-            <div class="font-weight-bold col-4">
-                One of two columns
-            </div>
-            <div class="col-4">
-                One of two columns
-            </div>
-        </div>
-        <div class="row justify-content-center border-dark = border-right bg-secondary ">
-            <div class="shadow-lg col-4">
-                One of two columns
-            </div>
-            <div class="col-4 ">
-                One of two columns
-            </div>
-        </div>
-        <div class="row justify-content-end font-weight-light">
-            <div class="col-4">
-                One of two columns
-            </div>
-            <div class="t">
-                One of two columns
-            </div>
-        </div>
-        <div class="row justify-content-around">
-            <div class="col-4 table-primary">
-                One of two columns
-            </div>
-            <div class="bi">
-                One of two columns
-            </div>
-        </div>
-        <div class="row justify-content-between">
-            <div class="col-4">
-                One of two columns
-            </div>
-            <div class="col-4">
-                One of two columns
-            </div>
-        </div>
-        <div class="row justify-content-evenly">
-            <div class="col-4">
-                One of two columns
-            </div>
-            <div class="col-4">
-                One of two columns
-            </div>
-        </div>
-    </div>
-
-    <svg class="bi" width="32" height="32" fill="currentColor">
-        <use xlink:href="bootstrap-icons.svg#heart-fill" />
-    </svg>
-    <svg class="bi" width="32" height="32" fill="currentColor">
-        <use xlink:href="bootstrap-icons.svg#toggles" />
-    </svg>
-    <svg class="bi" width="32" height="32" fill="currentColor">
-        <use xlink:href="bootstrap-icons.svg#shop" />
-    </svg>
-
-    <form>
-        <div class="form-group">
-            <label for="inputDate">Введите дату:</label>
-            <input type="datetime-local" class="form-control">
-        </div>
-    </form>
-
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-        Запустить модальное окно
-    </button>
-
-    <!-- Modal -->
-    <div class="modal-dialog" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">abc</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="d-inline p-2 bg-primary text-white">d-inline</div>
-    <div class="d-inline p-2 bg-dark text-white">d-inline</div>
-
-    <span class="d-block p-2 bg-primary text-white">d-block</span>
-    <span class="d-block p-2 bg-dark text-white">d-block</span>
-
-
+    @*@if (EditRoomDialogOpen)
+    {
+        <ModalDialogChangeRoom Title="Edit room"
+                               ErrorMessage=@_errorMessage
+                               Room=_romToEdit
+                               OnClose="@OnEditRoomDialogClose"></ModalDialogChangeRoom>
+    }*@
 }
 
+<style>
+    .font-segoeUI {
+        font-family: Segoe UI;
+    }
+
+    .font-size-0_75 {
+        font-size: 0.75rem;
+    }
+
+    .font-size-1 {
+        font-size: 1rem;
+    }
+
+    .font-size-1_25 {
+        font-size: 1.25rem;
+    }
+
+    .font-size-1_5 {
+        font-size: 1.5rem;
+    }
+
+    .font-size-1_75 {
+        font-size: 1.75rem;
+    }
+
+    .font-size-2 {
+        font-size: 2rem;
+    }
+
+    .font-size-2_25 {
+        font-size: 2.25rem;
+    }
+
+    .font-size-2_5 {
+        font-size: 2.5rem;
+    }
+
+    .font-size-2_75 {
+        font-size: 2.75rem;
+    }
+
+    .font-size-3 {
+        font-size: 3rem;
+    }
+
+    .font-size-4 {
+        font-size: 4rem;
+    }
+
+    .opacity_05 {
+        opacity: 0.5;
+    }
+
+    .opacity_06 {
+        opacity: 0.6;
+    }
+
+    .m-left-3 {
+        margin-left: 3rem;
+    }
+</style>

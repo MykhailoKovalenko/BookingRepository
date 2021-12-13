@@ -23,6 +23,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Protocols;
 using BookingRooms.ActionFilters;
 using BookingRooms.Models;
+using BookingRooms.Extensions;
 
 namespace BookingRooms
 {
@@ -38,7 +39,26 @@ namespace BookingRooms
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.AddLogging(config =>
+            //{
+            //    config.AddDebug();
+            //    config.AddConsole();
+            //});
+
+
+            ///////////////////
+            //
+            //var serviceProvider = services.BuildServiceProvider();
+            //var logger = serviceProvider.GetService<ILogger<AnyClass>>();
+            //services.AddSingleton(typeof(ILogger), logger);
+            //
+
+            //services.AddLogging();
+
             services.AddControllers();
+
+            
+
 
             services.AddDbContext<BRoomsContext>(
                     options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -83,6 +103,8 @@ namespace BookingRooms
                 app.UseDeveloperExceptionPage();
             }
 
+            app.ConfigureExceptionHandler();
+                
             app.UseHttpsRedirection();
 
             app.UseCors("MVCClient");
@@ -95,10 +117,6 @@ namespace BookingRooms
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-
-                //endpoints.MapControllerRoute(
-                //        name: "default",
-                //        pattern: "{controller=Room/Index}/{action=Index}");
             });
 
             app.UseSwagger();

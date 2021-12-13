@@ -52,6 +52,7 @@
     <Compile Include="DTO\UserInputDTO.cs" />
     <Compile Include="DTO\UserOutputDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RequestClasses\RoomParameters.cs" />
     <Compile Include="Validation\MaxBookingHoursAttribute.cs" />
     <Compile Include="Validation\MinBookingMinutesAttribute.cs" />
     <Compile Include="Validation\BookingStartDateLessEndDateAttribute.cs" />

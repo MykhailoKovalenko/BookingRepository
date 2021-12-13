@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BookingRooms.Models;
+using SharedBookingLibrary.RequestClasses;
 
 namespace BookingRooms.DataAccessLayer.Repository
 {
