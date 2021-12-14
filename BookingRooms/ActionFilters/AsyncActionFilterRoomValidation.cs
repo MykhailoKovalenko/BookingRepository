@@ -54,7 +54,12 @@ namespace BookingRooms.ActionFilters
                     return false;
                 }
 
-                var existingRoom = await _roomService.GetByNameAsync(room.Name);
+                if (context.ActionArguments.ContainsKey("id"))
+                {
+                    room.Id = (int)context.ActionArguments["id"];
+                }
+
+                var existingRoom = await _roomService.GetByNameExceptAsync(room.Name, room.Id);
                 if (existingRoom != null)
                 {
                     context.Result = new UnprocessableEntityObjectResult(new { errors = new Dictionary<string, string>()

@@ -38,6 +38,12 @@ namespace BookingRooms.DataAccessLayer.Repository
                     .Include(i => i.Bookings)
                     .FirstOrDefaultAsync(i => i.Name == name);
         }
+        public async Task<Room> GetByNameExceptAsync(string name, int exceptRoomId)
+        {
+            return await _context.Rooms
+                    .Include(i => i.Bookings)
+                    .FirstOrDefaultAsync(i => i.Name == name && i.Id != exceptRoomId);
+        }
 
         public async Task<Room> AddAsync(Room room)
         {

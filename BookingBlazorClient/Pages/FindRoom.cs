@@ -10,11 +10,19 @@ namespace BookingBlazorClient.Pages
     {
         private RoomParameters _roomParameters;
 
+        public bool ParamChanged { get; set; }
+
+        private void FindRooms()
+        {
+            ParamChanged = true;
+            StateHasChanged();
+        }
+
         protected override void OnInitialized()
         {
             _roomParameters =  new RoomParameters();
             _roomParameters.StartBookingDate = DateTime.Today.AddHours(DateTime.Now.Hour + 1);
             _roomParameters.EndBookingDate = _roomParameters.StartBookingDate.AddHours(1);
-        }
+        }  
     }
 }

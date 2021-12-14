@@ -63,7 +63,7 @@ namespace BookingBlazorClient.Pages
 
         #endregion
 
-        #region ModalDialogChangeRoom
+        #region ChangeRoomReg
 
         private void OpenChangeRoomDialog(BookingOutputDTO booking)
         {
@@ -100,10 +100,10 @@ namespace BookingBlazorClient.Pages
                 ChangeRoomDialogOpen = false;
                 _errorMessage = "";
                 _selectIsValid = true;
-
-                await LoadData();
                 _bookingToChangeRoom = null;
 
+                await LoadData();
+                
                 StateHasChanged();
                 return;
             }
@@ -118,7 +118,7 @@ namespace BookingBlazorClient.Pages
 
         #endregion
 
-        #region ModalDialogChangePeriod
+        #region ChangePeriodReg
 
         private void OpenChangePeriodDialog(BookingOutputDTO booking)
         {

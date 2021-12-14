@@ -1,0 +1,83 @@
+﻿<div class="modal fade show" id="modalEditRoom" style="display:block; background-color: rgba(10,10,10,.4);" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@Title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" @onclick="@ModalCancel">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <RoomDetails Room=@Room
+                         ErrorMessage=@ErrorMessage />
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="@ModalCancel">Close</button>
+                <button type="submit" class="btn btn-primary btn-sm" @onclick="@ModalOk">Save</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    .font-segoeUI {
+        font-family: Segoe UI;
+    }
+
+    .font-size-0_75 {
+        font-size: 0.75rem;
+    }
+
+    .font-size-1 {
+        font-size: 1rem;
+    }
+
+    .font-size-1_25 {
+        font-size: 1.25rem;
+    }
+
+    .font-size-1_5 {
+        font-size: 1.5rem;
+    }
+
+    .font-size-1_75 {
+        font-size: 1.75rem;
+    }
+
+    .font-size-2 {
+        font-size: 2rem;
+    }
+
+    .font-size-2_25 {
+        font-size: 2.25rem;
+    }
+
+    .font-size-2_5 {
+        font-size: 2.5rem;
+    }
+
+    .font-size-2_75 {
+        font-size: 2.75rem;
+    }
+
+    .font-size-3 {
+        font-size: 3rem;
+    }
+
+    .font-size-4 {
+        font-size: 4rem;
+    }
+
+    .opacity_05 {
+        opacity: 0.5;
+    }
+
+    .opacity_06 {
+        opacity: 0.6;
+    }
+
+    .m-left-3 {
+        margin-left: 3rem;
+    }
+</style>

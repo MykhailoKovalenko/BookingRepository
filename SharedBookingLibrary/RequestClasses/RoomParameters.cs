@@ -12,6 +12,6 @@ namespace SharedBookingLibrary.RequestClasses
         public DateTime EndBookingDate { get; set; } = DateTime.MinValue;
         public uint MinPlaces { get; set; } = 0;
         public bool ProjectorAvailable { get; set; } = false;
-        public bool UseProjectorParameter { get; set; } = false;
+        public bool UseProjectorParameter => ProjectorAvailable;
     }
 }

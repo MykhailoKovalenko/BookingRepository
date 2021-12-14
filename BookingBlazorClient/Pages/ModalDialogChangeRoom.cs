@@ -18,12 +18,7 @@ namespace BookingBlazorClient.Pages
         public string Title { get; set; }
         [Parameter]
         public string ErrorMessage { get; set; }
-        //[Parameter]
-        //public bool SelectIsValid { get; set; }
-       
-        //[Parameter]
         public string ValidString { get; set; }
-        private string _erm;
 
         [Parameter]
         public BookingOutputDTO Booking { get; set; }
@@ -47,18 +42,6 @@ namespace BookingBlazorClient.Pages
 
         private void OnSelectRoom()
         {
-            // SelectIsValid = !(selectedRoomId == 0);
-            //!(selectedRoomId == 0 || !String.IsNullOrEmpty(ErrorMessage));
-
-            //ValidString = "is-valid";
-
-            //if (selectedRoomId == 0 || !String.IsNullOrEmpty(ErrorMessage))
-            //{
-            //    ValidString = "is-invalid";
-            //}
-
-            _erm = "12w3e" + selectedRoomId;
-
             ValidString = (selectedRoomId > 0) ? "is-valid" : "is-invalid";
         }
 

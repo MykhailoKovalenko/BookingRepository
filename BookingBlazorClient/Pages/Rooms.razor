@@ -8,15 +8,13 @@ else
 {
     <div class="d-flex">
         <h5 class="m-2 font-weight-bold">Rooms</h5>
-        <a class="btn btn-success btn-sm m-1" href="createbooking">
-            Create new
-        </a>
+        <button type="button" class="btn btn-success btn-sm m-1" @onclick="() => OpenCreateRoomDialog()">Create new</button>
     </div>
 
     <ol class="list-group">
         <li class="list-group-item d-flex justify-content-center align-items-start text-center text-black-50" style="background-color: rgba(10,10,10,0.1);">
             <div class="col-2"><span class="oi oi-info"></span></div>
-            <div class="col-2"><img src="/images/chair22.png" class="opacity_06" /></div>
+            <div class="col-2"><img src="/images/chair20.png" class="opacity_05" /></div>
             <div class="col-2"><span class="oi oi-video"></span></div>
             <div class="col-2"><span class="oi oi-pencil"></span></div>
             <div class="col-2"><span class="oi oi-trash"></span></div>
@@ -25,24 +23,24 @@ else
 
         @foreach (var room in rooms)
         {
-    <li class="list-group-item d-flex justify-content-center align-items-start bg-light text-center">
-        <div class="col-2">@room.Name</div>
-        <div class="col-2">@room.Places</div>
-        <div class="col-2">@room.IsProjector</div>
-        <div class="col-2">
-            <button type="button" class="btn btn-primary btn-sm" @onclick="() => OpenEditRoomDialog(room)">Edit room</button>
-        </div>
-        <div class="col-2">
-            <button type="button" class="btn btn-danger btn-sm" @onclick="() => OpenDeleteDialog(room)">Delete</button>
-        </div>
-        <div class="col-2">
-            <a class="btn btn-success btn-sm m-1" href="createbooking">
-                Book now
-            </a>
-        </div>
+            <li class="list-group-item d-flex justify-content-center align-items-start bg-light text-center">
+                <div class="col-2">@room.Name</div>
+                <div class="col-2">@room.Places</div>
+                <div class="col-2">@(room.IsProjector ? "YES":"NO")</div>
+                <div class="col-2">
+                    <button type="button" class="btn btn-primary btn-sm" @onclick="() => OpenEditRoomDialog(room)">Edit room</button>
+                </div>
+                <div class="col-2">
+                    <button type="button" class="btn btn-danger btn-sm" @onclick="() => OpenDeleteDialog(room)">Delete</button>
+                </div>
+                <div class="col-2">
+                    <a class="btn btn-success btn-sm m-1" href="createbooking">
+                        Book now
+                    </a>
+                </div>
 
-        
-    </li>
+
+            </li>
         }
     </ol>
 
@@ -51,13 +49,16 @@ else
         <ModalDialogDelete Title="Are you sure?" Text="Pay attention, related bookings will be deleted!" OnClose="@OnDeleteDialogClose"></ModalDialogDelete>
     }
 
-    @*@if (EditRoomDialogOpen)
+    @if (EditRoomDialogOpen)
     {
-        <ModalDialogChangeRoom Title="Edit room"
-                               ErrorMessage=@_errorMessage
-                               Room=_romToEdit
-                               OnClose="@OnEditRoomDialogClose"></ModalDialogChangeRoom>
-    }*@
+        <ModalDialogEditRoom Title="Edit room" ErrorMessage="@_errorMessage" Room=@_roomToEdit OnClose="@OnEditRoomDialogClose"></ModalDialogEditRoom>
+    }
+
+}
+
+@if (CreateRoomDialogOpen)
+{
+    <ModalDialogCreateRoom Title="Create room" ErrorMessage="@_errorMessage" Room=@_roomToCreate OnClose="@OnCreateRoomDialogClose"></ModalDialogCreateRoom>
 }
 
 <style>
@@ -115,6 +116,10 @@ else
 
     .opacity_06 {
         opacity: 0.6;
+    }
+
+    .opacity_07 {
+        opacity: 0.7;
     }
 
     .m-left-3 {

@@ -39,7 +39,7 @@ namespace BookingBlazorClient.Pages
             navigation.NavigateTo("bookings");
         }
 
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
             _booking = new BookingInputDTO();
             _booking.Start = DateTime.Today.AddHours(DateTime.Now.Hour + 1);
