@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace BookingRooms.ActionFilters
 {
-    public class AsyncActionFilterRoomValidation : IAsyncActionFilter
+    public class AsyncActionFilterRoomValidation : ActionFilterAttribute, IAsyncActionFilter
     {
         private readonly IRoomService _roomService;
         private readonly IMapper _mapper;

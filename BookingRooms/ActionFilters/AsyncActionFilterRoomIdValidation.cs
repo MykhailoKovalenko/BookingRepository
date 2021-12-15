@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BookingRooms.ActionFilters
 {
-    public class AsyncActionFilterRoomIdValidation : IAsyncActionFilter
+    public class AsyncActionFilterRoomIdValidation : ActionFilterAttribute, IAsyncActionFilter
     {
         private readonly IRoomService _roomService;
         public AsyncActionFilterRoomIdValidation(IRoomService roomService)
